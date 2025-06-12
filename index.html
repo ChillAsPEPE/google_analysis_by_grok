@@ -543,7 +543,7 @@
                 </div>
                 <div class="control-group">
                     <label for="aiGrowthRate">AI 성장률 (%): <span id="aiGrowthValue">0</span></label>
-                    <input type="range" id="aiGrowthRate" min="0" max="300" step="1" value="0">
+                    <input type="range" id="aiGrowthRate" min="0" max="20" step="1" value="0">
                 </div>
                 <div class="control-group">
                     <label for="regulatoryLossRate">규제 피해액률 (%): <span id="regulatoryLossRateValue">0</span></label>
@@ -552,12 +552,15 @@
             </div>
             <div id="sliderValues"></div>
             <canvas id="customPePegChart"></canvas>
-            <p><strong>커스텀 분석</strong>: AI 성장률과 규제 피해액률(TAC 소송 패소로 인한 광고 매출 감소 비율)을 조정하여 커스텀 시나리오의 P/E 또는 PEG를 타 기업과 비교하세요. AI 성장률은 AI 매출(GCP, Gemini, Waymo) 증가율, 규제 피해액률은 TAC 계약 종료(예: 애플 계약)로 인한 지속적 매출 손실을 반영합니다.</p>
-            <p><strong>커스텀 그래프 피해액률 계산</strong>: 
+            <p><strong>커스텀 분석</strong>: AI 성장률은 2025년 AI 매출(226억 달러, GCP, Gemini, Waymo)에 대한 증가율(0~20%)로, 전체 순이익(265.4억 달러)에 기여하는 EPS 증가로 변환됩니다. 규제 피해액률은 광고 매출(678.2억 달러, 검색+유튜브+네트워크)에 대한 감소 비율(0~20%)로, 전체 순이익에 직접적인 비율로 적용되지 않습니다. 슬라이더를 조정하여 커스텀 시나리오의 P/E 또는 PEG를 타 기업과 비교하세요.</p>
+            <p><strong>커스텀 그래프 피해액률 및 성장률 계산</strong>: 
                 <ul>
-                    <li><strong>피해액률</strong>: 광고 매출(678.2억 달러 = 검색 494억 + 유튜브 104.7억 + 네트워크 79.5억)에 대한 감소 비율(0~20%).</li>
+                    <li><strong>규제 피해액률</strong>: 광고 매출(678.2억 달러)에 대한 감소 비율(0~20%). 이는 전체 순이익(265.4억 달러)에 직접적인 비율로 적용되지 않으며, 광고 매출 감소에 따른 순이익 감소를 계산합니다.</li>
                     <li><strong>계산</strong>: 피해액률(%) × 678.2억 = 매출 감소, 매출 감소 × 0.35(운영이익률, <a href="https://insights.visiblealpha.com">Visible Alpha</a>) = 순이익 감소, 순이익 감소 ÷ 120억(발행 주식 수, <a href="https://www.reuters.com">Reuters</a>) = EPS 감소.</li>
                     <li><strong>예시</strong>: 피해액률 10% → 매출 감소 67.82억 달러, 순이익 감소 23.74억 달러, EPS 감소 0.20달러.</li>
+                    <li><strong>AI 성장률</strong>: 2025년 AI 매출(226억 달러)에 대한 증가율(0~20%). 순이익 증가를 계산하여 전체 순이익에 기여하는 EPS 성장률로 변환됩니다.</li>
+                    <li><strong>계산</strong>: AI 성장률(%) × 226억 × 0.35 = 순이익 증가, 순이익 증가 ÷ 120억 = EPS 증가.</li>
+                    <li><strong>예시</strong>: AI 성장률 10% → 순이익 증가 7.91억 달러, EPS 증가 0.066달러.</li>
                 </ul>
             </p>
             <p><strong>출처</strong>: 
