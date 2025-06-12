@@ -19,9 +19,13 @@
             padding: 10px 0;
             text-align: center;
         }
+        h1 {
+            font-size: 2em;
+        }
         nav {
             background: #444;
             padding: 10px;
+            text-align: center;
         }
         nav a {
             color: #fff;
@@ -52,9 +56,15 @@
         th, td {
             padding: 10px;
             text-align: left;
+            min-width: 120px; /* 테이블 셀의 최소 너비 설정 */
         }
         th {
             background: #f4f4f4;
+        }
+        /* 모바일에서 테이블이 넘칠 경우 가로 스크롤을 제공하기 위한 컨테이너 */
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
         }
         canvas {
             margin: 20px 0;
@@ -80,13 +90,16 @@
         .control-group {
             display: flex;
             flex-direction: column;
+            flex: 1 1 200px; /* 컨트롤 그룹이 유연하게 변하도록 설정 */
         }
         .control-group label {
             margin-bottom: 5px;
         }
         .control-group select, .control-group input {
-            padding: 5px;
+            padding: 8px;
             font-size: 16px;
+            width: 100%; /* 입력 필드를 부모 요소에 맞춤 */
+            box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
         }
         #sliderValues {
             margin-top: 10px;
@@ -107,6 +120,40 @@
             width: 100%;
             margin-top: 20px;
         }
+
+        /* 모바일 반응형 디자인 (가로 768px 이하) */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            nav {
+                padding: 0;
+            }
+            nav a {
+                display: block; /* 네비게이션 링크를 세로로 쌓음 */
+                margin: 0;
+                padding: 15px;
+                border-bottom: 1px solid #555;
+            }
+            nav a:last-child {
+                border-bottom: none;
+            }
+            .controls {
+                flex-direction: column; /* 컨트롤들을 세로로 쌓음 */
+                gap: 15px;
+            }
+            th, td {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -124,64 +171,66 @@
             <h2>규제 히스토리 및 전망</h2>
             <p>구글(알파벳)은 검색 및 광고 시장에서의 독점적 지위로 인해 미국과 유럽연합에서 다수의 소송을 직면하고 있습니다. 아래는 주요 사건과 현재 진행 상황, 향후 일정을 상세히 정리한 내용입니다.</p>
             <h3>주요 독점 사건</h3>
-            <table>
-                <tr>
-                    <th>사건</th>
-                    <th>시작 날짜</th>
-                    <th>결정 날짜</th>
-                    <th>결과</th>
-                    <th>주요 쟁점</th>
-                    <th>현재 진행 상황</th>
-                </tr>
-                <tr>
-                    <td>미국 v. 구글 (검색)</td>
-                    <td>2020-10-20</td>
-                    <td>2024-08-05</td>
-                    <td>구글의 검색 시장 독점 인정, 항소 중</td>
-                    <td>기본 검색 엔진 계약(예: 애플과의 200억 달러 계약)을 통한 독점 유지</td>
-                    <td>2025년 5월 30일 구제 방안 재판 마지막 변론, 2025년 8월 판결 예상</td>
-                </tr>
-                <tr>
-                    <td>미국 v. 구글 (광고 기술)</td>
-                    <td>2023-01-24</td>
-                    <td>2025-04-17</td>
-                    <td>구글의 광고 기술 시장 독점 인정</td>
-                    <td>광고 기술 스택(예: Google Ad Manager) 독점</td>
-                    <td>2025년 9월 구제 방안 재판 예정</td>
-                </tr>
-                <tr>
-                    <td>구글 쇼핑 (EU)</td>
-                    <td>2010</td>
-                    <td>2017-06-27</td>
-                    <td>벌금 €24억, 구글 쇼핑 분리</td>
-                    <td>자사 쇼핑 서비스 우선 제공</td>
-                    <td>항소 기각, 규제 준수 완료</td>
-                </tr>
-                <tr>
-                    <td>안드로이드 (EU)</td>
-                    <td>2013</td>
-                    <td>2018-07-19</td>
-                    <td>벌금 €43억, 규제 준수</td>
-                    <td>앱 사전 설치 강제 및 경쟁 안드로이드 억제</td>
-                    <td>항소 중, 일부 준수 조치 시행</td>
-                </tr>
-                <tr>
-                    <td>애드센스 (EU)</td>
-                    <td>2010</td>
-                    <td>2019-03-20</td>
-                    <td>벌금 €14.9억, 규제 준수 완료</td>
-                    <td>경쟁 광고 제한</td>
-                    <td>규제 준수 완료</td>
-                </tr>
-                <tr>
-                    <td>핏빗 인수 (EU)</td>
-                    <td>2020</td>
-                    <td>2020-12-17</td>
-                    <td>조건부 승인</td>
-                    <td>데이터 사용 및 API 접근 우려</td>
-                    <td>규제 준수 중</td>
-                </tr>
-            </table>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>사건</th>
+                        <th>시작 날짜</th>
+                        <th>결정 날짜</th>
+                        <th>결과</th>
+                        <th>주요 쟁점</th>
+                        <th>현재 진행 상황</th>
+                    </tr>
+                    <tr>
+                        <td>미국 v. 구글 (검색)</td>
+                        <td>2020-10-20</td>
+                        <td>2024-08-05</td>
+                        <td>구글의 검색 시장 독점 인정, 항소 중</td>
+                        <td>기본 검색 엔진 계약(예: 애플과의 200억 달러 계약)을 통한 독점 유지</td>
+                        <td>2025년 5월 30일 구제 방안 재판 마지막 변론, 2025년 8월 판결 예상</td>
+                    </tr>
+                    <tr>
+                        <td>미국 v. 구글 (광고 기술)</td>
+                        <td>2023-01-24</td>
+                        <td>2025-04-17</td>
+                        <td>구글의 광고 기술 시장 독점 인정</td>
+                        <td>광고 기술 스택(예: Google Ad Manager) 독점</td>
+                        <td>2025년 9월 구제 방안 재판 예정</td>
+                    </tr>
+                    <tr>
+                        <td>구글 쇼핑 (EU)</td>
+                        <td>2010</td>
+                        <td>2017-06-27</td>
+                        <td>벌금 €24억, 구글 쇼핑 분리</td>
+                        <td>자사 쇼핑 서비스 우선 제공</td>
+                        <td>항소 기각, 규제 준수 완료</td>
+                    </tr>
+                    <tr>
+                        <td>안드로이드 (EU)</td>
+                        <td>2013</td>
+                        <td>2018-07-19</td>
+                        <td>벌금 €43억, 규제 준수</td>
+                        <td>앱 사전 설치 강제 및 경쟁 안드로이드 억제</td>
+                        <td>항소 중, 일부 준수 조치 시행</td>
+                    </tr>
+                    <tr>
+                        <td>애드센스 (EU)</td>
+                        <td>2010</td>
+                        <td>2019-03-20</td>
+                        <td>벌금 €14.9억, 규제 준수 완료</td>
+                        <td>경쟁 광고 제한</td>
+                        <td>규제 준수 완료</td>
+                    </tr>
+                    <tr>
+                        <td>핏빗 인수 (EU)</td>
+                        <td>2020</td>
+                        <td>2020-12-17</td>
+                        <td>조건부 승인</td>
+                        <td>데이터 사용 및 API 접근 우려</td>
+                        <td>규제 준수 중</td>
+                    </tr>
+                </table>
+            </div>
             <h3>향후 일정</h3>
             <ul>
                 <li><strong>2025년 8월</strong>: 검색 시장 독점 구제 방안 판결 예상.</li>
@@ -239,103 +288,107 @@
                 </ul>
             </p>
             <h3>사업 부문별 매출</h3>
-            <table>
-                <tr>
-                    <th>부문</th>
-                    <th>매출 (억 달러)</th>
-                    <th>YoY 성장률</th>
-                    <th>규제 리스크</th>
-                </tr>
-                <tr>
-                    <td>Google Search & Other</td>
-                    <td>494</td>
-                    <td>+12.3%</td>
-                    <td>높음 (TAC 계약 종료 가능성)</td>
-                </tr>
-                <tr>
-                    <td>YouTube Ads</td>
-                    <td>104.7</td>
-                    <td>+13.8%</td>
-                    <td>중간 (광고 규제 가능성)</td>
-                </tr>
-                <tr>
-                    <td>Google Network</td>
-                    <td>79.5</td>
-                    <td>-4%</td>
-                    <td>높음 (광고 기술 분할 가능성)</td>
-                </tr>
-                <tr>
-                    <td>Subscriptions, Platforms, Devices</td>
-                    <td>116.3</td>
-                    <td>+8%</td>
-                    <td>낮음 (앱 마켓 규제 가능성)</td>
-                </tr>
-                <tr>
-                    <td>Google Cloud</td>
-                    <td>119.6</td>
-                    <td>+30%</td>
-                    <td>낮음</td>
-                </tr>
-                <tr>
-                    <td>Other Bets</td>
-                    <td>4</td>
-                    <td>-39%</td>
-                    <td>낮음</td>
-                </tr>
-                <tr>
-                    <th>총 매출</th>
-                    <td>964.7</td>
-                    <td>+12%</td>
-                    <td>-</td>
-                </tr>
-            </table>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>부문</th>
+                        <th>매출 (억 달러)</th>
+                        <th>YoY 성장률</th>
+                        <th>규제 리스크</th>
+                    </tr>
+                    <tr>
+                        <td>Google Search & Other</td>
+                        <td>494</td>
+                        <td>+12.3%</td>
+                        <td>높음 (TAC 계약 종료 가능성)</td>
+                    </tr>
+                    <tr>
+                        <td>YouTube Ads</td>
+                        <td>104.7</td>
+                        <td>+13.8%</td>
+                        <td>중간 (광고 규제 가능성)</td>
+                    </tr>
+                    <tr>
+                        <td>Google Network</td>
+                        <td>79.5</td>
+                        <td>-4%</td>
+                        <td>높음 (광고 기술 분할 가능성)</td>
+                    </tr>
+                    <tr>
+                        <td>Subscriptions, Platforms, Devices</td>
+                        <td>116.3</td>
+                        <td>+8%</td>
+                        <td>낮음 (앱 마켓 규제 가능성)</td>
+                    </tr>
+                    <tr>
+                        <td>Google Cloud</td>
+                        <td>119.6</td>
+                        <td>+30%</td>
+                        <td>낮음</td>
+                    </tr>
+                    <tr>
+                        <td>Other Bets</td>
+                        <td>4</td>
+                        <td>-39%</td>
+                        <td>낮음</td>
+                    </tr>
+                    <tr>
+                        <th>총 매출</th>
+                        <td>964.7</td>
+                        <td>+12%</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </div>
             <h3>매출 그래프</h3>
             <button id="toggle-revenue-loss" class="toggle-button">규제 리스크 감소폭 숨기기</button>
             <canvas id="revenueChart"></canvas>
             <p><strong>설명</strong>: 파란색 막대는 실제 매출(감소폭 숨김 시 감소폭 포함), 빨간색 반투명 막대는 규제 리스크로 인한 예상 매출 감소(광고 15%, Subscriptions 5%)를 겹쳐 표현합니다.</p>
             <h3>사업 부문별 순이익</h3>
-            <table>
-                <tr>
-                    <th>부문</th>
-                    <th>순이익 (억 달러)</th>
-                    <th>규제 리스크 감소폭 (억 달러)</th>
-                </tr>
-                <tr>
-                    <td>Google Search & Other</td>
-                    <td>172.9</td>
-                    <td>14.8</td>
-                </tr>
-                <tr>
-                    <td>YouTube Ads</td>
-                    <td>26.2</td>
-                    <td>2.3</td>
-                </tr>
-                <tr>
-                    <td>Google Network</td>
-                    <td>15.9</td>
-                    <td>1.4</td>
-                </tr>
-                <tr>
-                    <td>Subscriptions, Platforms, Devices</td>
-                    <td>17.4</td>
-                    <td>0.3</td>
-                </tr>
-                <tr>
-                    <td>Google Cloud</td>
-                    <td>16.6</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>Other Bets</td>
-                    <td>-11.7</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <th>총 순이익</th>
-                    <td>265.4</td>
-                    <td>18.9</td>
-                </tr>
-            </table>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>부문</th>
+                        <th>순이익 (억 달러)</th>
+                        <th>규제 리스크 감소폭 (억 달러)</th>
+                    </tr>
+                    <tr>
+                        <td>Google Search & Other</td>
+                        <td>172.9</td>
+                        <td>14.8</td>
+                    </tr>
+                    <tr>
+                        <td>YouTube Ads</td>
+                        <td>26.2</td>
+                        <td>2.3</td>
+                    </tr>
+                    <tr>
+                        <td>Google Network</td>
+                        <td>15.9</td>
+                        <td>1.4</td>
+                    </tr>
+                    <tr>
+                        <td>Subscriptions, Platforms, Devices</td>
+                        <td>17.4</td>
+                        <td>0.3</td>
+                    </tr>
+                    <tr>
+                        <td>Google Cloud</td>
+                        <td>16.6</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Other Bets</td>
+                        <td>-11.7</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>총 순이익</th>
+                        <td>265.4</td>
+                        <td>18.9</td>
+                    </tr>
+                </table>
+            </div>
             <h3>순이익 그래프</h3>
             <button id="toggle-net-income-loss" class="toggle-button">규제 리스크 감소폭 숨기기</button>
             <canvas id="netIncomeChart"></canvas>
@@ -350,165 +403,171 @@
             <h2>밸류에이션 비교</h2>
             <p>구글과 주요 빅테크 기업의 P/E 및 PEG 비율을 비교하고, 주가 174달러 고정 시 AI 매출 성장 케이스와 6가지 시나리오별 P/E 및 PEG 변화를 분석했습니다.</p>
             <h3>AI 매출 성장 케이스</h3>
-            <table>
-                <tr>
-                    <th>부문</th>
-                    <th>2025년 매출 (억 달러)</th>
-                    <th>2027년 매출 (억 달러)</th>
-                    <th>2025년 수익 (억 달러)</th>
-                    <th>2027년 수익 (억 달러)</th>
-                    <th>성장률</th>
-                </tr>
-                <tr>
-                    <td>GCP (AI 인프라)</td>
-                    <td>160</td>
-                    <td>300</td>
-                    <td>24</td>
-                    <td>60</td>
-                    <td>28%</td>
-                </tr>
-                <tr>
-                    <td>Gemini AI (검색)</td>
-                    <td>60</td>
-                    <td>100</td>
-                    <td>21</td>
-                    <td>35</td>
-                    <td>20%</td>
-                </tr>
-                <tr>
-                    <td>Waymo</td>
-                    <td>6</td>
-                    <td>20</td>
-                    <td>-3</td>
-                    <td>2</td>
-                    <td>50%</td>
-                </tr>
-                <tr>
-                    <th>총계</th>
-                    <td>226</td>
-                    <td>420</td>
-                    <td>42</td>
-                    <td>97</td>
-                    <td>-</td>
-                </tr>
-            </table>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>부문</th>
+                        <th>2025년 매출 (억 달러)</th>
+                        <th>2027년 매출 (억 달러)</th>
+                        <th>2025년 수익 (억 달러)</th>
+                        <th>2027년 수익 (억 달러)</th>
+                        <th>성장률</th>
+                    </tr>
+                    <tr>
+                        <td>GCP (AI 인프라)</td>
+                        <td>160</td>
+                        <td>300</td>
+                        <td>24</td>
+                        <td>60</td>
+                        <td>28%</td>
+                    </tr>
+                    <tr>
+                        <td>Gemini AI (검색)</td>
+                        <td>60</td>
+                        <td>100</td>
+                        <td>21</td>
+                        <td>35</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>Waymo</td>
+                        <td>6</td>
+                        <td>20</td>
+                        <td>-3</td>
+                        <td>2</td>
+                        <td>50%</td>
+                    </tr>
+                    <tr>
+                        <th>총계</th>
+                        <td>226</td>
+                        <td>420</td>
+                        <td>42</td>
+                        <td>97</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </div>
             <p><strong>분석</strong>: AI 매출은 2025년 총 매출의 21%, 2027년 28% 기여 예상. GCP와 Gemini는 주요 성장 동력, Waymo는 2027년 수익화 시작 (<a href="https://www.reuters.com">Reuters</a>).</p>
             <h3>현재 P/E 비율 비교</h3>
-            <table>
-                <tr>
-                    <th>기업</th>
-                    <th>P/E 비율 (2025년 6월)</th>
-                </tr>
-                <tr>
-                    <td>Google (GOOGL)</td>
-                    <td>22.9</td>
-                </tr>
-                <tr>
-                    <td>Microsoft (MSFT)</td>
-                    <td>34</td>
-                </tr>
-                <tr>
-                    <td>Apple (AAPL)</td>
-                    <td>39</td>
-                </tr>
-                <tr>
-                    <td>Amazon (AMZN)</td>
-                    <td>47</td>
-                </tr>
-                <tr>
-                    <td>Meta (META)</td>
-                    <td>28</td>
-                </tr>
-            </table>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>기업</th>
+                        <th>P/E 비율 (2025년 6월)</th>
+                    </tr>
+                    <tr>
+                        <td>Google (GOOGL)</td>
+                        <td>22.9</td>
+                    </tr>
+                    <tr>
+                        <td>Microsoft (MSFT)</td>
+                        <td>34</td>
+                    </tr>
+                    <tr>
+                        <td>Apple (AAPL)</td>
+                        <td>39</td>
+                    </tr>
+                    <tr>
+                        <td>Amazon (AMZN)</td>
+                        <td>47</td>
+                    </tr>
+                    <tr>
+                        <td>Meta (META)</td>
+                        <td>28</td>
+                    </tr>
+                </table>
+            </div>
             <h3>P/E 비율 비교 그래프</h3>
             <canvas id="peRatioChart"></canvas>
             <h3>시나리오별 P/E 및 PEG 분석 (주가 174달러)</h3>
-            <table>
-                <tr>
-                    <th>시나리오</th>
-                    <th>EPS 성장률</th>
-                    <th>2025년 EPS</th>
-                    <th>2025년 P/E</th>
-                    <th>2025년 PEG</th>
-                    <th>2026년 EPS</th>
-                    <th>2026년 P/E</th>
-                    <th>2027년 EPS</th>
-                    <th>2027년 P/E</th>
-                    <th>시장 평가</th>
-                </tr>
-                <tr>
-                    <td>TAC 중단 + AI 부진</td>
-                    <td>-5%</td>
-                    <td>7.22</td>
-                    <td>24.1</td>
-                    <td>∞</td>
-                    <td>6.86</td>
-                    <td>25.4</td>
-                    <td>6.52</td>
-                    <td>26.7</td>
-                    <td>성장 부진, 제한적 하락 (160달러)</td>
-                </tr>
-                <tr>
-                    <td>기본 (현재 추세)</td>
-                    <td>10%</td>
-                    <td>8.36</td>
-                    <td>20.8</td>
-                    <td>2.08</td>
-                    <td>9.20</td>
-                    <td>18.9</td>
-                    <td>10.12</td>
-                    <td>17.2</td>
-                    <td>저평가, 15.3% 상승 (200.66달러)</td>
-                </tr>
-                <tr>
-                    <td>AI 성장 + TAC 유지</td>
-                    <td>15%</td>
-                    <td>8.74</td>
-                    <td>19.9</td>
-                    <td>1.33</td>
-                    <td>10.05</td>
-                    <td>17.3</td>
-                    <td>11.56</td>
-                    <td>15.1</td>
-                    <td>강한 저평가, 43.7% 상승 (250달러)</td>
-                </tr>
-                <tr>
-                    <td>AI 성장 + TAC 중단</td>
-                    <td>5%</td>
-                    <td>7.98</td>
-                    <td>21.8</td>
-                    <td>4.36</td>
-                    <td>8.38</td>
-                    <td>20.8</td>
-                    <td>8.80</td>
-                    <td>19.8</td>
-                    <td>보수적 평가, 10% 상승 (191.4달러)</td>
-                </tr>
-                <tr>
-                    <td>벌금 + AI 성장</td>
-                    <td>12%</td>
-                    <td>8.51</td>
-                    <td>20.4</td>
-                    <td>1.70</td>
-                    <td>9.53</td>
-                    <td>18.3</td>
-                    <td>10.67</td>
-                    <td>16.3</td>
-                    <td>저평가, 20% 상승 (208.8달러)</td>
-                </tr>
-                <tr>
-                    <td>TAC 유지 + 클라우드 성장 가속</td>
-                    <td>18%</td>
-                    <td>8.97</td>
-                    <td>19.4</td>
-                    <td>1.08</td>
-                    <td>10.58</td>
-                    <td>16.4</td>
-                    <td>12.49</td>
-                    <td>13.9</td>
-                    <td>매우 강한 저평가, 50% 상승 (261달러)</td>
-                </tr>
-            </table>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>시나리오</th>
+                        <th>EPS 성장률</th>
+                        <th>2025년 EPS</th>
+                        <th>2025년 P/E</th>
+                        <th>2025년 PEG</th>
+                        <th>2026년 EPS</th>
+                        <th>2026년 P/E</th>
+                        <th>2027년 EPS</th>
+                        <th>2027년 P/E</th>
+                        <th>시장 평가</th>
+                    </tr>
+                    <tr>
+                        <td>TAC 중단 + AI 부진</td>
+                        <td>-5%</td>
+                        <td>7.22</td>
+                        <td>24.1</td>
+                        <td>∞</td>
+                        <td>6.86</td>
+                        <td>25.4</td>
+                        <td>6.52</td>
+                        <td>26.7</td>
+                        <td>성장 부진, 제한적 하락 (160달러)</td>
+                    </tr>
+                    <tr>
+                        <td>기본 (현재 추세)</td>
+                        <td>10%</td>
+                        <td>8.36</td>
+                        <td>20.8</td>
+                        <td>2.08</td>
+                        <td>9.20</td>
+                        <td>18.9</td>
+                        <td>10.12</td>
+                        <td>17.2</td>
+                        <td>저평가, 15.3% 상승 (200.66달러)</td>
+                    </tr>
+                    <tr>
+                        <td>AI 성장 + TAC 유지</td>
+                        <td>15%</td>
+                        <td>8.74</td>
+                        <td>19.9</td>
+                        <td>1.33</td>
+                        <td>10.05</td>
+                        <td>17.3</td>
+                        <td>11.56</td>
+                        <td>15.1</td>
+                        <td>강한 저평가, 43.7% 상승 (250달러)</td>
+                    </tr>
+                    <tr>
+                        <td>AI 성장 + TAC 중단</td>
+                        <td>5%</td>
+                        <td>7.98</td>
+                        <td>21.8</td>
+                        <td>4.36</td>
+                        <td>8.38</td>
+                        <td>20.8</td>
+                        <td>8.80</td>
+                        <td>19.8</td>
+                        <td>보수적 평가, 10% 상승 (191.4달러)</td>
+                    </tr>
+                    <tr>
+                        <td>벌금 + AI 성장</td>
+                        <td>12%</td>
+                        <td>8.51</td>
+                        <td>20.4</td>
+                        <td>1.70</td>
+                        <td>9.53</td>
+                        <td>18.3</td>
+                        <td>10.67</td>
+                        <td>16.3</td>
+                        <td>저평가, 20% 상승 (208.8달러)</td>
+                    </tr>
+                    <tr>
+                        <td>TAC 유지 + 클라우드 성장 가속</td>
+                        <td>18%</td>
+                        <td>8.97</td>
+                        <td>19.4</td>
+                        <td>1.08</td>
+                        <td>10.58</td>
+                        <td>16.4</td>
+                        <td>12.49</td>
+                        <td>13.9</td>
+                        <td>매우 강한 저평가, 50% 상승 (261달러)</td>
+                    </tr>
+                </table>
+            </div>
             <h3>시나리오별 P/E 비교 그래프</h3>
             <div class="controls">
                 <div class="control-group">
@@ -574,176 +633,178 @@
         <section id="wallstreet">
             <h2>월가의 리포트 및 코멘트 (2024-2025)</h2>
             <p>구글의 독점 이슈와 재무 전망에 대한 월가의 최근 1년(2024년 6월 13일 ~ 2025년 6월 13일) 분석 리포트를 날짜별로 정리하였습니다.</p>
-            <table>
-                <tr>
-                    <th>날짜</th>
-                    <th>투자은행</th>
-                    <th>분석가</th>
-                    <th>코멘트</th>
-                    <th>등급</th>
-                    <th>목표가</th>
-                </tr>
-                <tr>
-                    <td>2025-06-09</td>
-                    <td>Evercore ISI</td>
-                    <td>David Togut</td>
-                    <td>AI 혁신으로 검색 및 클라우드 성장 가속, 광고 시장 회복 긍정적.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$225</td>
-                </tr>
-                <tr>
-                    <td>2025-05-21</td>
-                    <td>Scotiabank</td>
-                    <td>Nat Schindler</td>
-                    <td>GCP 35% 성장, 유튜브 광고 수익 증가, 독점 소송 리스크 과소평가.</td>
-                    <td>Sector Outperform (강력 매수)</td>
-                    <td>$240</td>
-                </tr>
-                <tr>
-                    <td>2025-04-22</td>
-                    <td>Morgan Stanley</td>
-                    <td>Brian Nowak</td>
-                    <td>AI 기반 광고 ROI 개선, 클라우드 시장 점유율 확대 전망.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$210</td>
-                </tr>
-                <tr>
-                    <td>2025-04-03</td>
-                    <td>Goldman Sachs</td>
-                    <td>Eric Sheridan</td>
-                    <td>Gemini AI 통합으로 엔터프라이즈 시장 경쟁력 강화, 장기 성장 지속.</td>
-                    <td>Buy</td>
-                    <td>$215</td>
-                </tr>
-                <tr>
-                    <td>2025-03-07</td>
-                    <td>UBS</td>
-                    <td>Stephen Ju</td>
-                    <td>2025년 디지털 광고 예산 성장 둔화 우려, 그러나 AI 투자 긍정적.</td>
-                    <td>Neutral (보유)</td>
-                    <td>$190</td>
-                </tr>
-                <tr>
-                    <td>2025-02-12</td>
-                    <td>JPMorgan</td>
-                    <td>Doug Anmuth</td>
-                    <td>유튜브 쇼츠 및 AI 개인화로 광고 매출 안정, 클라우드 수익성 개선.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$208</td>
-                </tr>
-                <tr>
-                    <td>2025-02-04</td>
-                    <td>Jefferies</td>
-                    <td>Brent Thill</td>
-                    <td>4Q 전자상거래 광고 지출 강세, AI 혁신으로 검색 점유율 유지.</td>
-                    <td>Buy</td>
-                    <td>$200</td>
-                </tr>
-                <tr>
-                    <td>2025-02-04</td>
-                    <td>Bank of America</td>
-                    <td>Justin Post</td>
-                    <td>검색 및 유튜브 광고 강세, 클라우드 비용 효율화 성공적.</td>
-                    <td>Buy</td>
-                    <td>$205</td>
-                </tr>
-                <tr>
-                    <td>2025-01-19</td>
-                    <td>Barclays</td>
-                    <td>Ross Sandler</td>
-                    <td>AI 및 클라우드 투자로 2025년 EPS 성장 전망 상향.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$195</td>
-                </tr>
-                <tr>
-                    <td>2024-11-08</td>
-                    <td>Keybanc</td>
-                    <td>Justin Patterson</td>
-                    <td>광고 시장 안정, 클라우드 성장세 지속, 독점 소송 단기 영향 제한적.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$185</td>
-                </tr>
-                <tr>
-                    <td>2024-11-06</td>
-                    <td>Citigroup</td>
-                    <td>Ronald Josey</td>
-                    <td>유튜브 광고 및 구독 성장, AI 기술로 검색 효율성 향상.</td>
-                    <td>Buy</td>
-                    <td>$198</td>
-                </tr>
-                <tr>
-                    <td>2024-10-15</td>
-                    <td>Deutsche Bank</td>
-                    <td>Benjamin Black</td>
-                    <td>GCP 및 AI 솔루션으로 엔터프라이즈 시장 확대, 광고 수익 견고.</td>
-                    <td>Buy</td>
-                    <td>$202</td>
-                </tr>
-                <tr>
-                    <td>2024-09-25</td>
-                    <td>Bernstein</td>
-                    <td>Mark Shmulik</td>
-                    <td>검색 독점 소송 항소로 단기 리스크 완화, AI 투자 장기 성장 동력.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$210</td>
-                </tr>
-                <tr>
-                    <td>2024-09-10</td>
-                    <td>Wells Fargo</td>
-                    <td>Ken Gawrelski</td>
-                    <td>클라우드 및 AI 매출 비중 증가, 광고 시장 회복세.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$197</td>
-                </tr>
-                <tr>
-                    <td>2024-08-20</td>
-                    <td>Piper Sandler</td>
-                    <td>Thomas Champion</td>
-                    <td>유튜브 및 검색 광고 안정, 클라우드 비용 구조 개선.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$200</td>
-                </tr>
-                <tr>
-                    <td>2024-08-05</td>
-                    <td>Oppenheimer</td>
-                    <td>Jason Helfstein</td>
-                    <td>AI 기반 광고 및 클라우드 서비스로 2025년 성장 가속 예상.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$215</td>
-                </tr>
-                <tr>
-                    <td>2024-07-30</td>
-                    <td>Truist Securities</td>
-                    <td>Youssef Squali</td>
-                    <td>검색 및 유튜브 광고 수익 견조, AI 투자로 경쟁력 강화.</td>
-                    <td>Buy</td>
-                    <td>$196</td>
-                </tr>
-                <tr>
-                    <td>2024-07-23</td>
-                    <td>BMO Capital</td>
-                    <td>Brian Pitz</td>
-                    <td>GCP 성장 및 AI 혁신으로 2025년 EPS 전망 긍정적.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$205</td>
-                </tr>
-                <tr>
-                    <td>2024-07-15</td>
-                    <td>RBC Capital</td>
-                    <td>Brad Erickson</td>
-                    <td>검색 광고 및 클라우드 매출 성장, 독점 소송 영향 제한적.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$200</td>
-                </tr>
-                <tr>
-                    <td>2024-07-10</td>
-                    <td>Wedbush</td>
-                    <td>Scott Devitt</td>
-                    <td>AI 및 클라우드 중심 성장 전략, 유튜브 광고 수익 증가.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$210</td>
-                </tr>
-            </table>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>날짜</th>
+                        <th>투자은행</th>
+                        <th>분석가</th>
+                        <th>코멘트</th>
+                        <th>등급</th>
+                        <th>목표가</th>
+                    </tr>
+                    <tr>
+                        <td>2025-06-09</td>
+                        <td>Evercore ISI</td>
+                        <td>David Togut</td>
+                        <td>AI 혁신으로 검색 및 클라우드 성장 가속, 광고 시장 회복 긍정적.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$225</td>
+                    </tr>
+                    <tr>
+                        <td>2025-05-21</td>
+                        <td>Scotiabank</td>
+                        <td>Nat Schindler</td>
+                        <td>GCP 35% 성장, 유튜브 광고 수익 증가, 독점 소송 리스크 과소평가.</td>
+                        <td>Sector Outperform (강력 매수)</td>
+                        <td>$240</td>
+                    </tr>
+                    <tr>
+                        <td>2025-04-22</td>
+                        <td>Morgan Stanley</td>
+                        <td>Brian Nowak</td>
+                        <td>AI 기반 광고 ROI 개선, 클라우드 시장 점유율 확대 전망.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$210</td>
+                    </tr>
+                    <tr>
+                        <td>2025-04-03</td>
+                        <td>Goldman Sachs</td>
+                        <td>Eric Sheridan</td>
+                        <td>Gemini AI 통합으로 엔터프라이즈 시장 경쟁력 강화, 장기 성장 지속.</td>
+                        <td>Buy</td>
+                        <td>$215</td>
+                    </tr>
+                    <tr>
+                        <td>2025-03-07</td>
+                        <td>UBS</td>
+                        <td>Stephen Ju</td>
+                        <td>2025년 디지털 광고 예산 성장 둔화 우려, 그러나 AI 투자 긍정적.</td>
+                        <td>Neutral (보유)</td>
+                        <td>$190</td>
+                    </tr>
+                    <tr>
+                        <td>2025-02-12</td>
+                        <td>JPMorgan</td>
+                        <td>Doug Anmuth</td>
+                        <td>유튜브 쇼츠 및 AI 개인화로 광고 매출 안정, 클라우드 수익성 개선.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$208</td>
+                    </tr>
+                    <tr>
+                        <td>2025-02-04</td>
+                        <td>Jefferies</td>
+                        <td>Brent Thill</td>
+                        <td>4Q 전자상거래 광고 지출 강세, AI 혁신으로 검색 점유율 유지.</td>
+                        <td>Buy</td>
+                        <td>$200</td>
+                    </tr>
+                    <tr>
+                        <td>2025-02-04</td>
+                        <td>Bank of America</td>
+                        <td>Justin Post</td>
+                        <td>검색 및 유튜브 광고 강세, 클라우드 비용 효율화 성공적.</td>
+                        <td>Buy</td>
+                        <td>$205</td>
+                    </tr>
+                    <tr>
+                        <td>2025-01-19</td>
+                        <td>Barclays</td>
+                        <td>Ross Sandler</td>
+                        <td>AI 및 클라우드 투자로 2025년 EPS 성장 전망 상향.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$195</td>
+                    </tr>
+                    <tr>
+                        <td>2024-11-08</td>
+                        <td>Keybanc</td>
+                        <td>Justin Patterson</td>
+                        <td>광고 시장 안정, 클라우드 성장세 지속, 독점 소송 단기 영향 제한적.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$185</td>
+                    </tr>
+                    <tr>
+                        <td>2024-11-06</td>
+                        <td>Citigroup</td>
+                        <td>Ronald Josey</td>
+                        <td>유튜브 광고 및 구독 성장, AI 기술로 검색 효율성 향상.</td>
+                        <td>Buy</td>
+                        <td>$198</td>
+                    </tr>
+                    <tr>
+                        <td>2024-10-15</td>
+                        <td>Deutsche Bank</td>
+                        <td>Benjamin Black</td>
+                        <td>GCP 및 AI 솔루션으로 엔터프라이즈 시장 확대, 광고 수익 견고.</td>
+                        <td>Buy</td>
+                        <td>$202</td>
+                    </tr>
+                    <tr>
+                        <td>2024-09-25</td>
+                        <td>Bernstein</td>
+                        <td>Mark Shmulik</td>
+                        <td>검색 독점 소송 항소로 단기 리스크 완화, AI 투자 장기 성장 동력.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$210</td>
+                    </tr>
+                    <tr>
+                        <td>2024-09-10</td>
+                        <td>Wells Fargo</td>
+                        <td>Ken Gawrelski</td>
+                        <td>클라우드 및 AI 매출 비중 증가, 광고 시장 회복세.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$197</td>
+                    </tr>
+                    <tr>
+                        <td>2024-08-20</td>
+                        <td>Piper Sandler</td>
+                        <td>Thomas Champion</td>
+                        <td>유튜브 및 검색 광고 안정, 클라우드 비용 구조 개선.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$200</td>
+                    </tr>
+                    <tr>
+                        <td>2024-08-05</td>
+                        <td>Oppenheimer</td>
+                        <td>Jason Helfstein</td>
+                        <td>AI 기반 광고 및 클라우드 서비스로 2025년 성장 가속 예상.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$215</td>
+                    </tr>
+                    <tr>
+                        <td>2024-07-30</td>
+                        <td>Truist Securities</td>
+                        <td>Youssef Squali</td>
+                        <td>검색 및 유튜브 광고 수익 견조, AI 투자로 경쟁력 강화.</td>
+                        <td>Buy</td>
+                        <td>$196</td>
+                    </tr>
+                    <tr>
+                        <td>2024-07-23</td>
+                        <td>BMO Capital</td>
+                        <td>Brian Pitz</td>
+                        <td>GCP 성장 및 AI 혁신으로 2025년 EPS 전망 긍정적.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$205</td>
+                    </tr>
+                    <tr>
+                        <td>2024-07-15</td>
+                        <td>RBC Capital</td>
+                        <td>Brad Erickson</td>
+                        <td>검색 광고 및 클라우드 매출 성장, 독점 소송 영향 제한적.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$200</td>
+                    </tr>
+                    <tr>
+                        <td>2024-07-10</td>
+                        <td>Wedbush</td>
+                        <td>Scott Devitt</td>
+                        <td>AI 및 클라우드 중심 성장 전략, 유튜브 광고 수익 증가.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$210</td>
+                    </tr>
+                </table>
+            </div>
             <h3>분석</h3>
             <p>월가 분석가들은 규제 리스크가 주가에 상당히 반영되었다고 평가하며, AI 및 클라우드 성장으로 과도한 저평가 가능성을 제기합니다. 20개 리포트 중 18개가 매수 등급, 평균 목표가 $204.88(현재 $168.47 대비 +21.6%)으로 낙관적 전망이 우세합니다. 단, UBS는 디지털 광고 성장 둔화 우려로 중립적 견해를 제시했습니다.</p>
             <p><strong>출처</strong>: 
@@ -808,6 +869,8 @@
                     ]
                 },
                 options: {
+                    responsive: true, // 반응형 옵션
+                    maintainAspectRatio: false, // 종횡비 유지 안함
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -857,6 +920,8 @@
                     ]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -941,6 +1006,8 @@
                     ]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -1002,6 +1069,8 @@
                     ]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -1056,6 +1125,8 @@
                     ]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -1100,20 +1171,30 @@
             const regulatoryLossRate = parseFloat(document.getElementById('regulatoryLossRate').value);
 
             // EPS 성장률 계산
-            const aiContribution = aiGrowthRate * 0.5; // AI 매출 1% → EPS 0.5%
-            const regulatoryImpact = (regulatoryLossRate / 100) * 678.2 * 0.35 / 120; // 광고 매출 678.2억, 이익률 35%, 주식 120억
-            const epsGrowthRate = aiContribution - regulatoryImpact * 100;
+            const aiRevenueIncrease = (aiGrowthRate / 100) * 226; // 226억 달러 기준
+            const aiProfitIncrease = aiRevenueIncrease * 0.35; // 이익률 35%
+            
+            const regulatoryRevenueLoss = (regulatoryLossRate / 100) * 678.2; // 광고 매출 678.2억 기준
+            const regulatoryProfitLoss = regulatoryRevenueLoss * 0.35;
 
-            // EPS 예측
-            let eps = 7.6; // 2024년 EPS
+            const baseNetIncome = 265.4; // 총 순이익 265.4억
+            const baseEps = baseNetIncome / 120; // 발행주식수 120억
+
+            const newNetIncome = baseNetIncome + aiProfitIncrease - regulatoryProfitLoss;
+            const newEps = newNetIncome / 120;
+            const epsGrowthRate = ((newEps / baseEps) - 1) * 100;
+            
+            // 미래 EPS 예측
+            let futureEps = baseEps;
             for (let i = 0; i < years; i++) {
-                eps *= (1 + epsGrowthRate / 100);
+                futureEps *= (1 + epsGrowthRate / 100);
             }
-            eps = Math.max(eps, 0.01); // EPS 음수 방지
+            futureEps = Math.max(futureEps, 0.01);
 
             // P/E 및 PEG 계산
-            const pe = 174 / eps;
-            const peg = epsGrowthRate !== 0 ? pe / epsGrowthRate : Infinity;
+            const stockPrice = 174;
+            const pe = stockPrice / futureEps;
+            const peg = epsGrowthRate > 0 ? pe / epsGrowthRate : Infinity;
 
             // 그래프 데이터
             const labels = ['Google', 'Microsoft', 'Apple', 'Amazon', 'Meta'];
@@ -1121,7 +1202,6 @@
             const title = mode === 'pe' ? `커스텀 시나리오 P/E 비율 비교 (${2024 + years}년)` : `커스텀 시나리오 PEG 비율 비교 (${2024 + years}년)`;
             const yAxisLabel = mode === 'pe' ? 'P/E 비율' : 'PEG 비율';
 
-            // 기존 차트 파괴
             if (customPePegChartInstance) {
                 customPePegChartInstance.destroy();
             }
@@ -1153,7 +1233,9 @@
                     ]
                 },
                 options: {
-                    animation: { duration: 0 }, // 애니메이션 비활성화
+                    animation: { duration: 0 },
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -1222,13 +1304,9 @@
             const netIncomeToggleButton = document.getElementById('toggle-net-income-loss');
             if (revenueToggleButton) {
                 revenueToggleButton.addEventListener('click', toggleRevenueLoss);
-            } else {
-                console.warn('Revenue toggle button not found');
             }
             if (netIncomeToggleButton) {
                 netIncomeToggleButton.addEventListener('click', toggleNetIncomeLoss);
-            } else {
-                console.warn('Net income toggle button not found');
             }
 
             // 시나리오 P/E 연도 선택 이벤트
@@ -1238,29 +1316,17 @@
             }
 
             // 커스텀 그래프 컨트롤 이벤트 리스너
-            const pePegMode = document.getElementById('pePegMode');
-            const fwdYear = document.getElementById('fwdYear');
-            const aiGrowthRate = document.getElementById('aiGrowthRate');
-            const regulatoryLossRate = document.getElementById('regulatoryLossRate');
-
-            if (pePegMode) {
-                pePegMode.addEventListener('change', renderCustomPePegChart);
-            }
-            if (fwdYear) {
-                fwdYear.addEventListener('change', renderCustomPePegChart);
-            }
-            if (aiGrowthRate) {
-                aiGrowthRate.addEventListener('input', () => {
-                    updateSliderValues();
-                    renderCustomPePegChart();
-                });
-            }
-            if (regulatoryLossRate) {
-                regulatoryLossRate.addEventListener('input', () => {
-                    updateSliderValues();
-                    renderCustomPePegChart();
-                });
-            }
+            const controls = ['pePegMode', 'fwdYear', 'aiGrowthRate', 'regulatoryLossRate'];
+            controls.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    const eventType = element.type === 'range' ? 'input' : 'change';
+                    element.addEventListener(eventType, () => {
+                        updateSliderValues();
+                        renderCustomPePegChart();
+                    });
+                }
+            });
 
             // 초기 슬라이더 값 표시
             updateSliderValues();
