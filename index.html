@@ -151,7 +151,7 @@
                 <li><strong>진행 중</strong>: 검색 독점 항소 및 광고 기술 항소.</li>
             </ul>
             <h3>분석</h3>
-            <p>구글의 독과점 소송은 검색 및 광고 시장에 직접적인 영향을 미치며, 특히 기본 검색 계약(예: 애플과의 200억 달러 계약) 종료나 Google Ad Manager 분할과 같은 구조적 변화가 주요 리스크입니다. DOJ는 Chrome 브라우저 분리와 검색 데이터 공유를 제안하였으나, 판사는 신중한 입장을 보였습니다. 광고 기술 시장에서는 Google Ad Manager 등 핵심 자산의 분할 가능성이 논의되고 있으며, 이는 2025년 9월 재판에서 결정될 예정입니다. 항소 과정은 최대 5년까지 걸릴 수 있어 단기적 영향은 제한적일 수 있으나, 장기적으로는 매출 구조에 상당한 변화가 예상됩니다.</p>
+            <p>구글의 독과점 소송은 검색 및 광고 시장에 직접적인 영향을 미치며, 특히 기본 검색 계약(예: 애플과의 200억 달러 계약) 종료나 Google Ad Manager 분할과 같은 구조적 변화가 주요 리스크입니다. DOJ는 Chrome 브라우저 분리와 검색 데이터 공유를 제안하였으나, 판사는 신중한 입장을 보였습니다. 항소 과정은 최대 5년까지 걸릴 수 있어 단기적 영향은 제한적이나, 장기적으로 매출 구조 변화 예상됩니다.</p>
             <p><strong>출처</strong>: 
                 <a href="https://www.npr.org/2024/08/05/nx-s1-5064624/google-justice-department-antitrust-search">NPR</a>, 
                 <a href="https://www.justice.gov/opa/pr/department-justice-prevails-landmark-antitrust-case-against-google">DOJ</a>, 
@@ -217,28 +217,29 @@
             </table>
             <h3>매출 그래프</h3>
             <canvas id="revenueChart"></canvas>
-            <p><strong>설명</strong>: 파란색 막대는 각 부문의 실제 매출을 나타내며, 빨간색 반투명 막대는 규제 리스크로 인한 예상 매출 감소(광고 부문 15%, Subscriptions 5%)를 겹쳐 표현합니다.</p>
+            <p><strong>설명</strong>: 파란색 막대는 실제 매출, 빨간색 반투명 막대는 규제 리스크로 인한 예상 매출 감소(광고 15%, Subscriptions 5%)를 표현합니다.</p>
             <h3>순이익 분석</h3>
-            <p><strong>총 순이익</strong>: 265.4억 달러 (2024년 4분기). 규제 리스크로 인해 광고 부문 매출 감소 및 소송 비용 등이 순이익에 영향을 미칠 가능성이 있습니다. 예상 감소는 약 11.7% (31.1억 달러)입니다.</p>
+            <p><strong>총 순이익</strong>: 265.4억 달러. 규제 리스크로 광고 매출 감소 및 소송 비용 등이 순이익에 영향을 미칠 가능성이 있으며, 예상 감소는 약 11.7% (31.1억 달러)입니다.</p>
             <canvas id="netIncomeChart"></canvas>
-            <p><strong>설명</strong>: 파란색 막대는 총 순이익을 나타내며, 빨간색 반투명 막대는 규제 리스크로 인한 예상 순이익 감소를 표현합니다.</p>
+            <p><strong>설명</strong>: 파란색 막대는 총 순이익, 빨간색 반투명 막대는 규제 리스크로 인한 예상 순이익 감소를 표현합니다.</p>
             <h3>분석</h3>
-            <p>검색 및 광고 부문은 전체 매출의 약 75%를 차지하며, 규제 리스크의 주요 타격 대상입니다. DOJ의 요구(예: 크롬 매각, 애플과의 계약 종료)는 검색 매출에 상당한 영향을 줄 수 있으며, 광고 기술 분할은 Google Network에 추가적인 압박을 줄 수 있습니다. 클라우드 부문은 직접적인 규제 영향을 덜 받으며, 2025년 750억 달러의 AI 및 클라우드 투자로 성장 가능성이 큽니다.</p>
+            <p>검색 및 광고 부문은 매출의 약 75%를 차지하며, 규제 리스크의 주요 타격 대상입니다. DOJ의 요구(크롬 매각, 애플 계약 종료)는 검색 매출에 상당한 영향을 줄 수 있습니다. 클라우드는 2025년 750억 달러 AI 및 클라우드 투자로 성장 가능성이 큽니다.</p>
             <p><strong>출처</strong>: 
                 <a href="https://www.cnbc.com/2025/02/04/alphabet-q4-earnings-report-2024.html">CNBC</a>
             </p>
         </section>
         <section id="valuation">
             <h2>밸류에이션 비교</h2>
-            <p>구글과 주요 빅테크 기업(애플, 마이크로소프트, 아마존, 메타)의 P/E 비율을 비교하여 상대적 저평가 여부를 분석하였습니다.</p>
+            <p>구글과 주요 빅테크 기업의 P/E 비율을 비교하고, 주가 174달러 고정 시 시나리오별 P/E 및 PEG 변화를 분석했습니다.</p>
+            <h3>현재 P/E 비율 비교</h3>
             <table>
                 <tr>
                     <th>기업</th>
-                    <th>P/E 비율 (2025년 6월 기준)</th>
+                    <th>P/E 비율 (2025년 6월)</th>
                 </tr>
                 <tr>
                     <td>Google (GOOGL)</td>
-                    <td>~25</td>
+                    <td>22.9</td>
                 </tr>
                 <tr>
                     <td>Microsoft (MSFT)</td>
@@ -259,9 +260,49 @@
             </table>
             <h3>P/E 비율 비교 그래프</h3>
             <canvas id="peRatioChart"></canvas>
-            <p><strong>분석</strong>: 구글의 P/E 비율은 동종 업계 평균(약 33)보다 낮아 저평가된 것으로 보입니다. 이는 독과점 리스크와 AI 경쟁(예: OpenAI)으로 인한 할인을 반영한 결과로 보입니다. 클라우드 운영이익률이 2024년 13.9%에서 2026년 20%로 증가할 것으로 예상되며, 이는 약 18%의 연간 성장률을 시사합니다. 따라서 PEG 비율은 약 1.0으로, 공정 가치에 가까운 수준입니다.</p>
+            <h3>시나리오별 P/E 및 PEG 분석 (주가 174달러)</h3>
+            <table>
+                <tr>
+                    <th>시나리오</th>
+                    <th>EPS 성장률</th>
+                    <th>2025년 EPS</th>
+                    <th>P/E 비율</th>
+                    <th>PEG 비율</th>
+                    <th>시장 평가</th>
+                </tr>
+                <tr>
+                    <td>기본 (Base)</td>
+                    <td>10%</td>
+                    <td>8.36</td>
+                    <td>20.8</td>
+                    <td>2.08</td>
+                    <td>저평가, 15.3% 상승 여력 (200.66달러)</td>
+                </tr>
+                <tr>
+                    <td>규제 강화 (Bear)</td>
+                    <td>0%</td>
+                    <td>7.6</td>
+                    <td>22.9</td>
+                    <td>∞</td>
+                    <td>성장 정체 우려, 제한적 하락 (160달러)</td>
+                </tr>
+                <tr>
+                    <td>AI 성장 (Bull)</td>
+                    <td>15%</td>
+                    <td>8.74</td>
+                    <td>19.9</td>
+                    <td>1.33</td>
+                    <td>강한 저평가, 43.7% 상승 여력 (250달러)</td>
+                </tr>
+            </table>
+            <h3>시나리오별 P/E 비교 그래프</h3>
+            <canvas id="scenarioPeChart"></canvas>
+            <p><strong>분석</strong>: 구글의 P/E(22.9)는 업계 평균(33)보다 낮아 저평가 상태입니다. AI 성장 시나리오(P/E 19.9, PEG 1.33)에서 가장 매력적이며, 기본 시나리오(P/E 20.8)에서도 상승 여력(15.3%)이 있습니다. 규제 강화 시 성장 정체로 시장 신뢰 하락 가능하나, 클라우드와 AI로 하락폭 제한됩니다.</p>
             <p><strong>출처</strong>: 
-                <a href="https://www.investingyoung.ca/post/comprehensive-financial-analysis-meta-vs-google-vs-apple-vs-amazon">Investing Young</a>
+                <a href="https://www.investingyoung.ca/post/comprehensive-financial-analysis-meta-vs-google-vs-apple-vs-amazon">Investing Young</a>, 
+                <a href="https://www.tikr.com">Tikr.com</a>, 
+                <a href="https://stockanalysis.com">Stockanalysis.com</a>, 
+                <a href="https://www.tradingview.com">TradingView</a>
             </p>
         </section>
         <section id="wallstreet">
@@ -286,35 +327,34 @@
                 <tr>
                     <td>2024-08-05</td>
                     <td>검색 시장 독점 판결 (구글 패소)</td>
-                    <td>주가 9% 하락. D.A. Davidson의 Gil Luria: 분할 시 기업 가치 3.7조 달러로 두 배 증가 가능성.</td>
+                    <td>주가 9% 하락. D.A. Davidson의 Gil Luria: 분할 시 가치 3.7조 달러 가능.</td>
                 </tr>
                 <tr>
                     <td>2024-09-12</td>
                     <td>광고 기술 시장 독점 재판 시작</td>
-                    <td>분석가들: 광고 기술 사업 분할이 시장 구조 변화로 이어질 가능성.</td>
+                    <td>분석가들: 광고 기술 사업 분할로 시장 구조 변화 가능성.</td>
                 </tr>
                 <tr>
                     <td>2025-04-17</td>
                     <td>광고 기술 시장 독점 판결 (구글 패소)</td>
-                    <td>분석가들: Google Ad Manager 등의 분할 요구 예상.</td>
+                    <td>분석가들: Google Ad Manager 분할 요구 예상.</td>
                 </tr>
                 <tr>
                     <td>2025-04-21</td>
                     <td>검색 시장 독점 구제 방안 재판 시작</td>
-                    <td>분석가들: 구글 분할이나 기본 검색 계약 금지 논의 예상.</td>
+                    <td>분석가들: 구글 분할 또는 검색 계약 금지 논의.</td>
                 </tr>
                 <tr>
                     <td>2025-05-30</td>
                     <td>검색 시장 독점 구제 방안 재판 마지막 변론</td>
-                    <td>분석가들: 2025년 8월까지 판결 예상, 사업 구조 변화 예상.</td>
+                    <td>분석가들: 2025년 8월 판결 예상, 사업 구조 변화 가능.</td>
                 </tr>
             </table>
             <h3>분석</h3>
-            <p>월가의 분석가들은 구글의 독과점 리스크가 주가에 상당히 반영되었다고 평가하며, AI 및 클라우드 성장 가능성으로 인해 과도하게 반영되었을 가능성을 제기합니다. 특히, 분할 시 유튜브나 클라우드 부문이 독립적으로 더 높은 가치를 받을 수 있다는 낙관적 전망이 있습니다.</p>
+            <p>월가 분석가들은 규제 리스크가 주가에 상당히 반영되었다고 평가하며, AI 및 클라우드 성장으로 과도한 저평가 가능성을 제기합니다. 분할 시 유튜브와 클라우드의 독립적 가치 창출 전망이 긍정적입니다.</p>
             <p><strong>출처</strong>: 
                 <a href="https://www.nytimes.com/2025/06/02/technology/google-antitrust-breakup.html">NYT</a>, 
-                <a href="https://seekingalpha.com/article/4720633-google-stock-not-worried-antitrust-trial-reiterate-strong-buy">Seeking Alpha 1</a>, 
-                <a href="https://seekingalpha.com/article/4739708-navigating-risks-why-im-still-bullish-on-google-stock">Seeking Alpha 2</a>
+                <a href="https://seekingalpha.com/article/4720633-google-stock-not-worried-antitrust-trial-reiterate-strong-buy">Seeking Alpha</a>
             </p>
         </section>
     </div>
@@ -402,7 +442,7 @@
             }
         });
 
-        // P/E 비율 그래프
+        // P/E 비율 비교 그래프
         const peRatioCtx = document.getElementById('peRatioChart').getContext('2d');
         new Chart(peRatioCtx, {
             type: 'bar',
@@ -411,7 +451,7 @@
                 datasets: [
                     {
                         label: 'P/E 비율',
-                        data: [25, 34, 39, 47, 28],
+                        data: [22.9, 34, 39, 47, 28],
                         backgroundColor: [
                             'rgba(54, 162, 235, 0.8)',
                             'rgba(255, 206, 86, 0.8)',
@@ -442,6 +482,55 @@
                 },
                 plugins: {
                     title: { display: true, text: '2025년 6월 기준 빅테크 기업 P/E 비율 비교' },
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // 시나리오별 P/E 비교 그래프
+        const scenarioPeCtx = document.getElementById('scenarioPeChart').getContext('2d');
+        new Chart(scenarioPeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Google (Base)', 'Google (Bear)', 'Google (Bull)', 'Microsoft', 'Apple', 'Amazon', 'Meta'],
+                datasets: [
+                    {
+                        label: 'P/E 비율',
+                        data: [20.8, 22.9, 19.9, 34, 39, 47, 28],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(255, 159, 64, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'P/E 비율' }
+                    },
+                    x: {
+                        title: { display: true, text: '기업/시나리오' }
+                    }
+                },
+                plugins: {
+                    title: { display: true, text: '시나리오별 구글 P/E 비율 및 타 기업 비교' },
                     legend: { display: false }
                 }
             }
