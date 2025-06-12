@@ -1116,7 +1116,7 @@
             const peg = epsGrowthRate !== 0 ? pe / epsGrowthRate : Infinity;
 
             // 그래프 데이터
-            const labels = ['커스텀 시나리오', 'Microsoft', 'Apple', 'Amazon', 'Meta'];
+            const labels = ['Google', 'Microsoft', 'Apple', 'Amazon', 'Meta'];
             const data = mode === 'pe' ? [pe, 34, 39, 47, 28] : [peg, 3.1, 2.9, 2.5, 1.22];
             const title = mode === 'pe' ? `커스텀 시나리오 P/E 비율 비교 (${2024 + years}년)` : `커스텀 시나리오 PEG 비율 비교 (${2024 + years}년)`;
             const yAxisLabel = mode === 'pe' ? 'P/E 비율' : 'PEG 비율';
