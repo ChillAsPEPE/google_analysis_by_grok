@@ -1,751 +1,177 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>구글 독점 소송 분석</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        nav {
-            background: #444;
-            padding: 10px;
-        }
-        nav a {
-            color: #fff;
-            margin: 0 15px;
-            text-decoration: none;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h2, h3 {
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background: #f4f4f4;
-        }
-        canvas {
-            margin: 20px 0;
-            max-width: 100%;
-        }
-        .toggle-button {
-            padding: 10px 20px;
-            margin: 10px 0;
-            background-color: #444;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .toggle-button:hover {
-            background-color: #555;
-        }
-        .controls {
-            margin: 20px 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .control-group {
-            display: flex;
-            flex-direction: column;
-        }
-        .control-group label {
-            margin-bottom: 5px;
-        }
-        .control-group select, .control-group input {
-            padding: 5px;
-            font-size: 16px;
-        }
-        #sliderValues {
-            margin-top: 10px;
-            font-size: 16px;
-        }
-        .positive {
-            color: green;
-        }
-        .negative {
-            color: red;
-        }
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            position: static;
-            width: 100%;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>구글 독점 소송 분석</h1>
-    </header>
-    <nav>
-        <a href="#regulation">규제 히스토리 및 전망</a>
-        <a href="#financial">재무 구조 분석</a>
-        <a href="#valuation">밸류에이션 비교</a>
-        <a href="#wallstreet">월가의 리포트 및 코멘트</a>
-    </nav>
-    <div class="container">
-        <section id="regulation">
-            <h2>규제 히스토리 및 전망</h2>
-            <p>구글(알파벳)은 검색 및 광고 시장에서의 독점적 지위로 인해 미국과 유럽연합에서 다수의 소송을 직면하고 있습니다. 아래는 주요 사건과 현재 진행 상황, 향후 일정을 상세히 정리한 내용입니다.</p>
-            <h3>주요 독점 사건</h3>
-            <table>
-                <tr>
-                    <th>사건</th>
-                    <th>시작 날짜</th>
-                    <th>결정 날짜</th>
-                    <th>결과</th>
-                    <th>주요 쟁점</th>
-                    <th>현재 진행 상황</th>
-                </tr>
-                <tr>
-                    <td>미국 v. 구글 (검색)</td>
-                    <td>2020-10-20</td>
-                    <td>2024-08-05</td>
-                    <td>구글의 검색 시장 독점 인정, 항소 중</td>
-                    <td>기본 검색 엔진 계약(예: 애플과의 200억 달러 계약)을 통한 독점 유지</td>
-                    <td>2025년 5월 30일 구제 방안 재판 마지막 변론, 2025년 8월 판결 예상</td>
-                </tr>
-                <tr>
-                    <td>미국 v. 구글 (광고 기술)</td>
-                    <td>2023-01-24</td>
-                    <td>2025-04-17</td>
-                    <td>구글의 광고 기술 시장 독점 인정</td>
-                    <td>광고 기술 스택(예: Google Ad Manager) 독점</td>
-                    <td>2025년 9월 구제 방안 재판 예정</td>
-                </tr>
-                <tr>
-                    <td>구글 쇼핑 (EU)</td>
-                    <td>2010</td>
-                    <td>2017-06-27</td>
-                    <td>벌금 €24억, 구글 쇼핑 분리</td>
-                    <td>자사 쇼핑 서비스 우선 제공</td>
-                    <td>항소 기각, 규제 준수 완료</td>
-                </tr>
-                <tr>
-                    <td>안드로이드 (EU)</td>
-                    <td>2013</td>
-                    <td>2018-07-19</td>
-                    <td>벌금 €43억, 규제 준수</td>
-                    <td>앱 사전 설치 강제 및 경쟁 안드로이드 억제</td>
-                    <td>항소 중, 일부 준수 조치 시행</td>
-                </tr>
-                <tr>
-                    <td>애드센스 (EU)</td>
-                    <td>2010</td>
-                    <td>2019-03-20</td>
-                    <td>벌금 €14.9억, 규제 준수 완료</td>
-                    <td>경쟁 광고 제한</td>
-                    <td>규제 준수 완료</td>
-                </tr>
-                <tr>
-                    <td>핏빗 인수 (EU)</td>
-                    <td>2020</td>
-                    <td>2020-12-17</td>
-                    <td>조건부 승인</td>
-                    <td>데이터 사용 및 API 접근 우려</td>
-                    <td>규제 준수 중</td>
-                </tr>
-            </table>
-            <h3>향후 일정</h3>
-            <ul>
-                <li><strong>2025년 8월</strong>: 검색 시장 독점 구제 방안 판결 예상.</li>
-                <li><strong>2025년 9월</strong>: 광고 기술 시장 구제 방안 재판.</li>
-                <li><strong>진행 중</strong>: 검색 독점 항소 및 광고 기술 항소.</li>
-            </ul>
-            <h3>분석</h3>
-            <p>구글의 독점 소송은 검색 및 광고 시장에 직접적인 영향을 미치며, 특히 기본 검색 계약(예: 애플과의 200억 달러 계약) 종료나 Google Ad Manager 분할과 같은 구조적 변화가 주요 리스크입니다. DOJ는 Chrome 브라우저 분리와 검색 데이터 공유를 제안하였으나, 판사는 신중한 입장을 보였습니다. 항소 과정은 최대 5년까지 걸릴 수 있어 단기적 영향은 제한적이나, 장기적으로 매출 구조 변화가 예상됩니다.</p>
-            <p><strong>출처</strong>: 
-                <a href="https://www.npr.org/2024/08/05/nx-s1-5064624/google-justice-department-antitrust-search">NPR</a>, 
-                <a href="https://www.justice.gov/opa/pr/department-justice-prevails-landmark-antitrust-case-against-google">DOJ</a>, 
-                <a href="https://ec.europa.eu/commission/presscorner/detail/en/IP_17_1784">EC Google Shopping</a>, 
-                <a href="https://www.reuters.com/article/us-eu-alphabet-inc-antitrust-idUSKCN1MJ2CA">Reuters Android</a>, 
-                <a href="http://europa.eu/rapid/press-release_IP-19-1770_en.htm">EC AdSense</a>, 
-                <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_20_2484">EC Fitbit</a>
-            </p>
-        </section>
-        <section id="financial">
-            <h2>재무 구조 분석</h2>
-            <p>2024년 4분기 구글의 재무 보고서를 기반으로 사업 부문별 매출과 순이익을 분석하였습니다. 규제 리스크로 인한 감소폭은 기존 막대와 겹쳐 표시되며, 숨기기 버튼으로 토글 가능합니다.</p>
-            <p><strong>규제 리스크 감소폭 산정 근거</strong>: 
-                <ul>
-                    <li><strong>광고 부문 매출 감소 (15%)</strong>: 
-                        <ul>
-                            <li><strong>검색 시장 독점 소송</strong>: 애플과의 TAC 계약(2024년 약 200억 달러, <a href="https://www.cnbc.com/2025/02/04/alphabet-q4-earnings-report-2024.html">CNBC</a>) 종료 시 검색 매출(494억 달러)의 20~30% 손실 예상 (<a href="https://www.reuters.com">Reuters</a>). TAC 총액(137.5억 달러)의 50%(68.75억 달러)가 애플 관련, 광고 부문(검색 494억, 유튜브 104.7억, 네트워크 79.5억)에 15% 감소율 적용, 총 101.7억 달러 감소(검색 74.1억, 유튜브 15.7억, 네트워크 11.9억). 2024년 8월 5일 구글 패소 판결 (<a href="https://www.npr.org/2024/08/05/nx-s1-5064624/google-justice-department-antitrust-search">NPR</a>).</li>
-                            <li><strong>광고 기술 소송</strong>: Google Ad Manager 분할로 네트워크 매출(79.5억)의 20~30% 감소, 검색/유튜브 간접 영향 5~10% (2025년 9월 재판, <a href="https://www.justice.gov/opa/pr/department-justice-prevails-landmark-antitrust-case-against-google">DOJ</a>, <a href="https://www.reuters.com">Reuters</a>).</li>
-                            <li><strong>EU 사례</strong>: 쇼핑/안드로이드 소송에서 광고 매출 3~7% 감소, 복합 리스크로 15% 중간값 적절 (<a href="https://ec.europa.eu/commission/presscorner/detail/en/IP_17_1784">EC</a>).</li>
-                        </ul>
-                    </li>
-                    <li><strong>Subscriptions, Platforms, Devices 매출 감소 (5%)</strong>: Epic Games 소송 및 EU DMA로 플레이스토어 수수료 30% → 15~20% 감소, 매출(116.3억)의 5~10% 손실, 5% 보수적 추정(5.8억 달러, <a href="https://www.reuters.com">Reuters</a>).</li>
-                    <li><strong>클라우드/Other Bets (0%)</strong>: 규제 영향 미미, 감소폭 0% (<a href="https://www.reuters.com">Reuters</a>).</li>
-                    <li><strong>순이익 감소 (7.1%)</strong>: 
-                        <ul>
-                            <li><strong>총 순이익</strong>: 265.4억 달러, 감소폭 18.9억 달러(7.1%, <a href="https://www.cnbc.com/2025/02/04/alphabet-q4-earnings-report-2024.html">CNBC</a>).</li>
-                            <li><strong>부문별</strong>: 검색 14.8억(15% × 172.9억 × 0.35 이익률), 유튜브 2.3억(15% × 26.2억 × 0.35), 네트워크 1.4억(15% × 15.9억 × 0.35), Subscriptions 0.3억(5% × 17.4억 × 0.35), 클라우드/Other Bets 0억.</li>
-                            <li><strong>TAC 패소 영향</strong>: 광고 매출 감소(101.7억, 이익률 35%)로 순이익 35.6억 감소, TAC 손실(68.75억)로 24.1억 감소 (<a href="https://insights.visiblealpha.com">Visible Alpha</a>).</li>
-                            <li><strong>총 지속적 영향</strong>: 광고 매출 감소(35.6억) + TAC 손실(24.1억) = 59.7억 달러.</li>
-                            <li><strong>1회성 비용 제외</strong>: 벌금(30~50억, 중간값 40억, <a href="https://www.reuters.com">Reuters</a>), 소송비(5~10억, 7.5억, <a href="https://www.nytimes.com/2025/06/02/technology/google-antitrust-breakup.html">NYT</a>) 제외.</li>
-                            <li><strong>보수적 조정</strong>: 총 영향(59.7억, 22.5%)을 항소(5년 가능, <a href="https://www.justice.gov/opa/pr/department-justice-prevails-landmark-antitrust-case-against-google">DOJ</a>), 클라우드 성장(30%, <a href="https://insights.visiblealpha.com">Visible Alpha</a>), AI 매출(2025년 226억, <a href="https://www.reuters.com">Reuters</a>) 완충으로 7.1% 최종 추정.</li>
-                        </ul>
-                    </li>
-                    <li><strong>제미나이 분석과의 비교</strong>:
-                        <ul>
-                            <li><strong>제미나이</strong>: Apple TAC 계약 파기 시 단기 이익 증가(+75억 달러, TAC 절감 200억 - 매출 손실 125억), Ad-Tech 규제(-19억), Play Store 규제(-10억). 검색 이익률 45%, 매출 손실 56% 가정, 완충 효과 미고려.</li>
-                            <li><strong>본 웹사이트</strong>: TAC 패소로 순이익 감소(-59.7억, 광고 매출 15% 감소 101.7억 + TAC 손실 68.75억), 완충으로 7.1%(-18.9억). 이익률 35%, 매출 손실 15%.</li>
-                            <li><strong>차이 원인</strong>: 
-                                <ul>
-                                    <li>제미나이는 TAC 절감 효과 과대평가, 매출 손실 비율(56%) 과다 추정, 완충 효과 미고려.</li>
-                                    <li>본 웹사이트는 보수적 매출 손실(15%, EU 사례 3~7% 참고), 이익률 35%, 항소/클라우드/AI 완충 반영.</li>
-                                    <li>제미나이의 검색 이익률(45%)은 과대, 본 웹사이트는 애널리스트 평균(35%) 적용.</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </p>
-            <h3>사업 부문별 매출</h3>
-            <table>
-                <tr>
-                    <th>부문</th>
-                    <th>매출 (억 달러)</th>
-                    <th>YoY 성장률</th>
-                    <th>규제 리스크</th>
-                </tr>
-                <tr>
-                    <td>Google Search & Other</td>
-                    <td>494</td>
-                    <td>+12.3%</td>
-                    <td>높음 (TAC 계약 종료 가능성)</td>
-                </tr>
-                <tr>
-                    <td>YouTube Ads</td>
-                    <td>104.7</td>
-                    <td>+13.8%</td>
-                    <td>중간 (광고 규제 가능성)</td>
-                </tr>
-                <tr>
-                    <td>Google Network</td>
-                    <td>79.5</td>
-                    <td>-4%</td>
-                    <td>높음 (광고 기술 분할 가능성)</td>
-                </tr>
-                <tr>
-                    <td>Subscriptions, Platforms, Devices</td>
-                    <td>116.3</td>
-                    <td>+8%</td>
-                    <td>낮음 (앱 마켓 규제 가능성)</td>
-                </tr>
-                <tr>
-                    <td>Google Cloud</td>
-                    <td>119.6</td>
-                    <td>+30%</td>
-                    <td>낮음</td>
-                </tr>
-                <tr>
-                    <td>Other Bets</td>
-                    <td>4</td>
-                    <td>-39%</td>
-                    <td>낮음</td>
-                </tr>
-                <tr>
-                    <th>총 매출</th>
-                    <td>964.7</td>
-                    <td>+12%</td>
-                    <td>-</td>
-                </tr>
-            </table>
-            <h3>매출 그래프</h3>
-            <button id="toggle-revenue-loss" class="toggle-button">규제 리스크 감소폭 숨기기</button>
-            <canvas id="revenueChart"></canvas>
-            <p><strong>설명</strong>: 파란색 막대는 실제 매출(감소폭 숨김 시 감소폭 포함), 빨간색 반투명 막대는 규제 리스크로 인한 예상 매출 감소(광고 15%, Subscriptions 5%)를 겹쳐 표현합니다.</p>
-            <h3>사업 부문별 순이익</h3>
-            <table>
-                <tr>
-                    <th>부문</th>
-                    <th>순이익 (억 달러)</th>
-                    <th>규제 리스크 감소폭 (억 달러)</th>
-                </tr>
-                <tr>
-                    <td>Google Search & Other</td>
-                    <td>172.9</td>
-                    <td>14.8</td>
-                </tr>
-                <tr>
-                    <td>YouTube Ads</td>
-                    <td>26.2</td>
-                    <td>2.3</td>
-                </tr>
-                <tr>
-                    <td>Google Network</td>
-                    <td>15.9</td>
-                    <td>1.4</td>
-                </tr>
-                <tr>
-                    <td>Subscriptions, Platforms, Devices</td>
-                    <td>17.4</td>
-                    <td>0.3</td>
-                </tr>
-                <tr>
-                    <td>Google Cloud</td>
-                    <td>16.6</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>Other Bets</td>
-                    <td>-11.7</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <th>총 순이익</th>
-                    <td>265.4</td>
-                    <td>18.9</td>
-                </tr>
-            </table>
-            <h3>순이익 그래프</h3>
-            <button id="toggle-net-income-loss" class="toggle-button">규제 리스크 감소폭 숨기기</button>
-            <canvas id="netIncomeChart"></canvas>
-            <p><strong>설명</strong>: 파란색 막대는 부문별 순이익(감소폭 숨김 시 감소폭 포함), 빨간색 반투명 막대는 규제 리스크로 인한 예상 순이익 감소(7.1%)를 겹쳐 표현합니다.</p>
-            <h3>분석</h3>
-            <p>검색 및 광고 부문은 매출과 순이익의 주요 원천이나, TAC 지불 소송 패소로 지속적 타격 예상됩니다. 클라우드는 2025년 750억 달러 AI 및 클라우드 투자로 성장 가능성이 큽니다.</p>
-            <p><strong>출처</strong>: 
-                <a href="https://www.cnbc.com/2025/02/04/alphabet-q4-earnings-report-2024.html">CNBC</a>
-            </p>
-        </section>
-        <section id="valuation">
-            <h2>밸류에이션 비교</h2>
-            <p>구글과 주요 빅테크 기업의 P/E 및 PEG 비율을 비교하고, 주가 174달러 고정 시 AI 매출 성장 케이스와 6가지 시나리오별 P/E 및 PEG 변화를 분석했습니다.</p>
-            <h3>AI 매출 성장 케이스</h3>
-            <table>
-                <tr>
-                    <th>부문</th>
-                    <th>2025년 매출 (억 달러)</th>
-                    <th>2027년 매출 (억 달러)</th>
-                    <th>2025년 수익 (억 달러)</th>
-                    <th>2027년 수익 (억 달러)</th>
-                    <th>성장률</th>
-                </tr>
-                <tr>
-                    <td>GCP (AI 인프라)</td>
-                    <td>160</td>
-                    <td>300</td>
-                    <td>24</td>
-                    <td>60</td>
-                    <td>28%</td>
-                </tr>
-                <tr>
-                    <td>Gemini AI (검색)</td>
-                    <td>60</td>
-                    <td>100</td>
-                    <td>21</td>
-                    <td>35</td>
-                    <td>20%</td>
-                </tr>
-                <tr>
-                    <td>Waymo</td>
-                    <td>6</td>
-                    <td>20</td>
-                    <td>-3</td>
-                    <td>2</td>
-                    <td>50%</td>
-                </tr>
-                <tr>
-                    <th>총계</th>
-                    <td>226</td>
-                    <td>420</td>
-                    <td>42</td>
-                    <td>97</td>
-                    <td>-</td>
-                </tr>
-            </table>
-            <p><strong>분석</strong>: AI 매출은 2025년 총 매출의 21%, 2027년 28% 기여 예상. GCP와 Gemini는 주요 성장 동력, Waymo는 2027년 수익화 시작 (<a href="https://www.reuters.com">Reuters</a>).</p>
-            <h3>현재 P/E 비율 비교</h3>
-            <table>
-                <tr>
-                    <th>기업</th>
-                    <th>P/E 비율 (2025년 6월)</th>
-                </tr>
-                <tr>
-                    <td>Google (GOOGL)</td>
-                    <td>22.9</td>
-                </tr>
-                <tr>
-                    <td>Microsoft (MSFT)</td>
-                    <td>34</td>
-                </tr>
-                <tr>
-                    <td>Apple (AAPL)</td>
-                    <td>39</td>
-                </tr>
-                <tr>
-                    <td>Amazon (AMZN)</td>
-                    <td>47</td>
-                </tr>
-                <tr>
-                    <td>Meta (META)</td>
-                    <td>28</td>
-                </tr>
-            </table>
-            <h3>P/E 비율 비교 그래프</h3>
-            <canvas id="peRatioChart"></canvas>
-            <h3>시나리오별 P/E 및 PEG 분석 (주가 174달러)</h3>
-            <table>
-                <tr>
-                    <th>시나리오</th>
-                    <th>EPS 성장률</th>
-                    <th>2025년 EPS</th>
-                    <th>2025년 P/E</th>
-                    <th>2025년 PEG</th>
-                    <th>2026년 EPS</th>
-                    <th>2026년 P/E</th>
-                    <th>2027년 EPS</th>
-                    <th>2027년 P/E</th>
-                    <th>시장 평가</th>
-                </tr>
-                <tr>
-                    <td>TAC 중단 + AI 부진</td>
-                    <td>-5%</td>
-                    <td>7.22</td>
-                    <td>24.1</td>
-                    <td>∞</td>
-                    <td>6.86</td>
-                    <td>25.4</td>
-                    <td>6.52</td>
-                    <td>26.7</td>
-                    <td>성장 부진, 제한적 하락 (160달러)</td>
-                </tr>
-                <tr>
-                    <td>기본 (현재 추세)</td>
-                    <td>10%</td>
-                    <td>8.36</td>
-                    <td>20.8</td>
-                    <td>2.08</td>
-                    <td>9.20</td>
-                    <td>18.9</td>
-                    <td>10.12</td>
-                    <td>17.2</td>
-                    <td>저평가, 15.3% 상승 (200.66달러)</td>
-                </tr>
-                <tr>
-                    <td>AI 성장 + TAC 유지</td>
-                    <td>15%</td>
-                    <td>8.74</td>
-                    <td>19.9</td>
-                    <td>1.33</td>
-                    <td>10.05</td>
-                    <td>17.3</td>
-                    <td>11.56</td>
-                    <td>15.1</td>
-                    <td>강한 저평가, 43.7% 상승 (250달러)</td>
-                </tr>
-                <tr>
-                    <td>AI 성장 + TAC 중단</td>
-                    <td>5%</td>
-                    <td>7.98</td>
-                    <td>21.8</td>
-                    <td>4.36</td>
-                    <td>8.38</td>
-                    <td>20.8</td>
-                    <td>8.80</td>
-                    <td>19.8</td>
-                    <td>보수적 평가, 10% 상승 (191.4달러)</td>
-                </tr>
-                <tr>
-                    <td>벌금 + AI 성장</td>
-                    <td>12%</td>
-                    <td>8.51</td>
-                    <td>20.4</td>
-                    <td>1.70</td>
-                    <td>9.53</td>
-                    <td>18.3</td>
-                    <td>10.67</td>
-                    <td>16.3</td>
-                    <td>저평가, 20% 상승 (208.8달러)</td>
-                </tr>
-                <tr>
-                    <td>TAC 유지 + 클라우드 성장 가속</td>
-                    <td>18%</td>
-                    <td>8.97</td>
-                    <td>19.4</td>
-                    <td>1.08</td>
-                    <td>10.58</td>
-                    <td>16.4</td>
-                    <td>12.49</td>
-                    <td>13.9</td>
-                    <td>매우 강한 저평가, 50% 상승 (261달러)</td>
-                </tr>
-            </table>
-            <h3>시나리오별 P/E 비교 그래프</h3>
-            <div class="controls">
-                <div class="control-group">
-                    <label for="peYear">연도 선택:</label>
-                    <select id="peYear">
-                        <option value="1">1년 후 (2025)</option>
-                        <option value="2">2년 후 (2026)</option>
-                        <option value="3">3년 후 (2027)</option>
-                    </select>
-                </div>
+                    <tr>
+                        <th>날짜</th>
+                        <th>투자은행</th>
+                        <th>분석가</th>
+                        <th>코멘트</th>
+                        <th>등급</th>
+                        <th>목표가</th>
+                    </tr>
+                    <tr>
+                        <td>2025-06-09</td>
+                        <td>Evercore ISI</td>
+                        <td>David Togut</td>
+                        <td>AI 혁신으로 검색 및 클라우드 성장 가속, 광고 시장 회복 긍정적.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$225</td>
+                    </tr>
+                    <tr>
+                        <td>2025-05-21</td>
+                        <td>Scotiabank</td>
+                        <td>Nat Schindler</td>
+                        <td>GCP 35% 성장, 유튜브 광고 수익 증가, 독점 소송 리스크 과소평가.</td>
+                        <td>Sector Outperform (강력 매수)</td>
+                        <td>$240</td>
+                    </tr>
+                    <tr>
+                        <td>2025-04-22</td>
+                        <td>Morgan Stanley</td>
+                        <td>Brian Nowak</td>
+                        <td>AI 기반 광고 ROI 개선, 클라우드 시장 점유율 확대 전망.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$210</td>
+                    </tr>
+                    <tr>
+                        <td>2025-04-03</td>
+                        <td>Goldman Sachs</td>
+                        <td>Eric Sheridan</td>
+                        <td>Gemini AI 통합으로 엔터프라이즈 시장 경쟁력 강화, 장기 성장 지속.</td>
+                        <td>Buy</td>
+                        <td>$215</td>
+                    </tr>
+                    <tr>
+                        <td>2025-03-07</td>
+                        <td>UBS</td>
+                        <td>Stephen Ju</td>
+                        <td>2025년 디지털 광고 예산 성장 둔화 우려, 그러나 AI 투자 긍정적.</td>
+                        <td>Neutral (보유)</td>
+                        <td>$190</td>
+                    </tr>
+                    <tr>
+                        <td>2025-02-12</td>
+                        <td>JPMorgan</td>
+                        <td>Doug Anmuth</td>
+                        <td>유튜브 쇼츠 및 AI 개인화로 광고 매출 안정, 클라우드 수익성 개선.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$208</td>
+                    </tr>
+                    <tr>
+                        <td>2025-02-04</td>
+                        <td>Jefferies</td>
+                        <td>Brent Thill</td>
+                        <td>4Q 전자상거래 광고 지출 강세, AI 혁신으로 검색 점유율 유지.</td>
+                        <td>Buy</td>
+                        <td>$200</td>
+                    </tr>
+                    <tr>
+                        <td>2025-02-04</td>
+                        <td>Bank of America</td>
+                        <td>Justin Post</td>
+                        <td>검색 및 유튜브 광고 강세, 클라우드 비용 효율화 성공적.</td>
+                        <td>Buy</td>
+                        <td>$205</td>
+                    </tr>
+                    <tr>
+                        <td>2025-01-19</td>
+                        <td>Barclays</td>
+                        <td>Ross Sandler</td>
+                        <td>AI 및 클라우드 투자로 2025년 EPS 성장 전망 상향.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$195</td>
+                    </tr>
+                    <tr>
+                        <td>2024-11-08</td>
+                        <td>Keybanc</td>
+                        <td>Justin Patterson</td>
+                        <td>광고 시장 안정, 클라우드 성장세 지속, 독점 소송 단기 영향 제한적.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$185</td>
+                    </tr>
+                    <tr>
+                        <td>2024-11-06</td>
+                        <td>Citigroup</td>
+                        <td>Ronald Josey</td>
+                        <td>유튜브 광고 및 구독 성장, AI 기술로 검색 효율성 향상.</td>
+                        <td>Buy</td>
+                        <td>$198</td>
+                    </tr>
+                    <tr>
+                        <td>2024-10-15</td>
+                        <td>Deutsche Bank</td>
+                        <td>Benjamin Black</td>
+                        <td>GCP 및 AI 솔루션으로 엔터프라이즈 시장 확대, 광고 수익 견고.</td>
+                        <td>Buy</td>
+                        <td>$202</td>
+                    </tr>
+                    <tr>
+                        <td>2024-09-25</td>
+                        <td>Bernstein</td>
+                        <td>Mark Shmulik</td>
+                        <td>검색 독점 소송 항소로 단기 리스크 완화, AI 투자 장기 성장 동력.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$210</td>
+                    </tr>
+                    <tr>
+                        <td>2024-09-10</td>
+                        <td>Wells Fargo</td>
+                        <td>Ken Gawrelski</td>
+                        <td>클라우드 및 AI 매출 비중 증가, 광고 시장 회복세.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$197</td>
+                    </tr>
+                    <tr>
+                        <td>2024-08-20</td>
+                        <td>Piper Sandler</td>
+                        <td>Thomas Champion</td>
+                        <td>유튜브 및 검색 광고 안정, 클라우드 비용 구조 개선.</td>
+                        <td>Overweight (매수)</td>
+                        <td>$200</td>
+                    </tr>
+                    <tr>
+                        <td>2024-08-05</td>
+                        <td>Oppenheimer</td>
+                        <td>Jason Helfstein</td>
+                        <td>AI 기반 광고 및 클라우드 서비스로 2025년 성장 가속 예상.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$215</td>
+                    </tr>
+                    <tr>
+                        <td>2024-07-30</td>
+                        <td>Truist Securities</td>
+                        <td>Youssef Squali</td>
+                        <td>검색 및 유튜브 광고 수익 견조, AI 투자로 경쟁력 강화.</td>
+                        <td>Buy</td>
+                        <td>$196</td>
+                    </tr>
+                    <tr>
+                        <td>2024-07-23</td>
+                        <td>BMO Capital</td>
+                        <td>Brian Pitz</td>
+                        <td>GCP 성장 및 AI 혁신으로 2025년 EPS 전망 긍정적.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$205</td>
+                    </tr>
+                    <tr>
+                        <td>2024-07-15</td>
+                        <td>RBC Capital</td>
+                        <td>Brad Erickson</td>
+                        <td>검색 광고 및 클라우드 매출 성장, 독점 소송 영향 제한적.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$200</td>
+                    </tr>
+                    <tr>
+                        <td>2024-07-10</td>
+                        <td>Wedbush</td>
+                        <td>Scott Devitt</td>
+                        <td>AI 및 클라우드 중심 성장 전략, 유튜브 광고 수익 증가.</td>
+                        <td>Outperform (매수)</td>
+                        <td>$210</td>
+                    </tr>
+                </table>
             </div>
-            <canvas id="scenarioPeChart"></canvas>
-            <h3>시나리오별 PEG 비교 그래프</h3>
-            <canvas id="pegChart"></canvas>
-            <h3>커스텀 시나리오 P/E 또는 PEG 비교 그래프</h3>
-            <div class="controls">
-                <div class="control-group">
-                    <label for="pePegMode">모드 선택:</label>
-                    <select id="pePegMode">
-                        <option value="pe">P/E</option>
-                        <option value="peg">PEG</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label for="fwdYear">연도 선택:</label>
-                    <select id="fwdYear">
-                        <option value="1">1년 후 (2025)</option>
-                        <option value="2">2년 후 (2026)</option>
-                        <option value="3">3년 후 (2027)</option>
-                        <option value="4">4년 후 (2028)</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label for="aiGrowthRate">AI 성장률 (%): <span id="aiGrowthValue">0</span></label>
-                    <input type="range" id="aiGrowthRate" min="0" max="20" step="1" value="0">
-                </div>
-                <div class="control-group">
-                    <label for="regulatoryLossRate">규제 피해액률 (%): <span id="regulatoryLossRateValue">0</span></label>
-                    <input type="range" id="regulatoryLossRate" min="0" max="20" step="1" value="0">
-                </div>
-            </div>
-            <div id="sliderValues"></div>
-            <canvas id="customPePegChart"></canvas>
-            <p><strong>커스텀 분석</strong>: AI 성장률은 2025년 AI 매출(226억 달러, GCP, Gemini, Waymo)에 대한 증가율(0~20%)로, 전체 순이익(265.4억 달러)에 기여하는 EPS 증가로 변환됩니다. 규제 피해액률은 광고 매출(678.2억 달러, 검색+유튜브+네트워크)에 대한 감소 비율(0~20%)로, 전체 순이익에 직접적인 비율로 적용되지 않습니다. 슬라이더를 조정하여 커스텀 시나리오의 P/E 또는 PEG를 타 기업과 비교하세요.</p>
-            <p><strong>커스텀 그래프 피해액률 및 성장률 계산</strong>: 
-                <ul>
-                    <li><strong>규제 피해액률</strong>: 광고 매출(678.2억 달러)에 대한 감소 비율(0~20%). 이는 전체 순이익(265.4억 달러)에 직접적인 비율로 적용되지 않으며, 광고 매출 감소에 따른 순이익 감소를 계산합니다.</li>
-                    <li><strong>계산</strong>: 피해액률(%) × 678.2억 = 매출 감소, 매출 감소 × 0.35(운영이익률, <a href="https://insights.visiblealpha.com">Visible Alpha</a>) = 순이익 감소, 순이익 감소 ÷ 120억(발행 주식 수, <a href="https://www.reuters.com">Reuters</a>) = EPS 감소.</li>
-                    <li><strong>예시</strong>: 피해액률 10% → 매출 감소 67.82억 달러, 순이익 감소 23.74억 달러, EPS 감소 0.20달러.</li>
-                    <li><strong>AI 성장률</strong>: 2025년 AI 매출(226억 달러)에 대한 증가율(0~20%). 순이익 증가를 계산하여 전체 순이익에 기여하는 EPS 성장률로 변환됩니다.</li>
-                    <li><strong>계산</strong>: AI 성장률(%) × 226억 × 0.35 = 순이익 증가, 순이익 증가 ÷ 120억 = EPS 증가.</li>
-                    <li><strong>예시</strong>: AI 성장률 10% → 순이익 증가 7.91억 달러, EPS 증가 0.066달러.</li>
-                </ul>
-            </p>
-            <p><strong>출처</strong>: 
-                <a href="https://www.investingyoung.ca/post/comprehensive-financial-analysis-meta-vs-google-vs-apple-vs-amazon">Investing Young</a>, 
-                <a href="https://www.tikr.com">Tikr.com</a>, 
-                <a href="https://stockanalysis.com">Stockanalysis.com</a>, 
-                <a href="https://www.tradingview.com">TradingView</a>, 
-                <a href="https://www.reuters.com">Reuters</a>
-            </p>
-        </section>
-        <section id="wallstreet">
-            <h2>월가의 리포트 및 코멘트 (2024-2025)</h2>
-            <p>구글의 독점 이슈와 재무 전망에 대한 월가의 최근 1년(2024년 6월 13일 ~ 2025년 6월 13일) 분석 리포트를 날짜별로 정리하였습니다.</p>
-            <table>
-                <tr>
-                    <th>날짜</th>
-                    <th>투자은행</th>
-                    <th>분석가</th>
-                    <th>코멘트</th>
-                    <th>등급</th>
-                    <th>목표가</th>
-                </tr>
-                <tr>
-                    <td>2025-06-09</td>
-                    <td>Evercore ISI</td>
-                    <td>David Togut</td>
-                    <td>AI 혁신으로 검색 및 클라우드 성장 가속, 광고 시장 회복 긍정적.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$225</td>
-                </tr>
-                <tr>
-                    <td>2025-05-21</td>
-                    <td>Scotiabank</td>
-                    <td>Nat Schindler</td>
-                    <td>GCP 35% 성장, 유튜브 광고 수익 증가, 독점 소송 리스크 과소평가.</td>
-                    <td>Sector Outperform (강력 매수)</td>
-                    <td>$240</td>
-                </tr>
-                <tr>
-                    <td>2025-04-22</td>
-                    <td>Morgan Stanley</td>
-                    <td>Brian Nowak</td>
-                    <td>AI 기반 광고 ROI 개선, 클라우드 시장 점유율 확대 전망.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$210</td>
-                </tr>
-                <tr>
-                    <td>2025-04-03</td>
-                    <td>Goldman Sachs</td>
-                    <td>Eric Sheridan</td>
-                    <td>Gemini AI 통합으로 엔터프라이즈 시장 경쟁력 강화, 장기 성장 지속.</td>
-                    <td>Buy</td>
-                    <td>$215</td>
-                </tr>
-                <tr>
-                    <td>2025-03-07</td>
-                    <td>UBS</td>
-                    <td>Stephen Ju</td>
-                    <td>2025년 디지털 광고 예산 성장 둔화 우려, 그러나 AI 투자 긍정적.</td>
-                    <td>Neutral (보유)</td>
-                    <td>$190</td>
-                </tr>
-                <tr>
-                    <td>2025-02-12</td>
-                    <td>JPMorgan</td>
-                    <td>Doug Anmuth</td>
-                    <td>유튜브 쇼츠 및 AI 개인화로 광고 매출 안정, 클라우드 수익성 개선.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$208</td>
-                </tr>
-                <tr>
-                    <td>2025-02-04</td>
-                    <td>Jefferies</td>
-                    <td>Brent Thill</td>
-                    <td>4Q 전자상거래 광고 지출 강세, AI 혁신으로 검색 점유율 유지.</td>
-                    <td>Buy</td>
-                    <td>$200</td>
-                </tr>
-                <tr>
-                    <td>2025-02-04</td>
-                    <td>Bank of America</td>
-                    <td>Justin Post</td>
-                    <td>검색 및 유튜브 광고 강세, 클라우드 비용 효율화 성공적.</td>
-                    <td>Buy</td>
-                    <td>$205</td>
-                </tr>
-                <tr>
-                    <td>2025-01-19</td>
-                    <td>Barclays</td>
-                    <td>Ross Sandler</td>
-                    <td>AI 및 클라우드 투자로 2025년 EPS 성장 전망 상향.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$195</td>
-                </tr>
-                <tr>
-                    <td>2024-11-08</td>
-                    <td>Keybanc</td>
-                    <td>Justin Patterson</td>
-                    <td>광고 시장 안정, 클라우드 성장세 지속, 독점 소송 단기 영향 제한적.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$185</td>
-                </tr>
-                <tr>
-                    <td>2024-11-06</td>
-                    <td>Citigroup</td>
-                    <td>Ronald Josey</td>
-                    <td>유튜브 광고 및 구독 성장, AI 기술로 검색 효율성 향상.</td>
-                    <td>Buy</td>
-                    <td>$198</td>
-                </tr>
-                <tr>
-                    <td>2024-10-15</td>
-                    <td>Deutsche Bank</td>
-                    <td>Benjamin Black</td>
-                    <td>GCP 및 AI 솔루션으로 엔터프라이즈 시장 확대, 광고 수익 견고.</td>
-                    <td>Buy</td>
-                    <td>$202</td>
-                </tr>
-                <tr>
-                    <td>2024-09-25</td>
-                    <td>Bernstein</td>
-                    <td>Mark Shmulik</td>
-                    <td>검색 독점 소송 항소로 단기 리스크 완화, AI 투자 장기 성장 동력.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$210</td>
-                </tr>
-                <tr>
-                    <td>2024-09-10</td>
-                    <td>Wells Fargo</td>
-                    <td>Ken Gawrelski</td>
-                    <td>클라우드 및 AI 매출 비중 증가, 광고 시장 회복세.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$197</td>
-                </tr>
-                <tr>
-                    <td>2024-08-20</td>
-                    <td>Piper Sandler</td>
-                    <td>Thomas Champion</td>
-                    <td>유튜브 및 검색 광고 안정, 클라우드 비용 구조 개선.</td>
-                    <td>Overweight (매수)</td>
-                    <td>$200</td>
-                </tr>
-                <tr>
-                    <td>2024-08-05</td>
-                    <td>Oppenheimer</td>
-                    <td>Jason Helfstein</td>
-                    <td>AI 기반 광고 및 클라우드 서비스로 2025년 성장 가속 예상.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$215</td>
-                </tr>
-                <tr>
-                    <td>2024-07-30</td>
-                    <td>Truist Securities</td>
-                    <td>Youssef Squali</td>
-                    <td>검색 및 유튜브 광고 수익 견조, AI 투자로 경쟁력 강화.</td>
-                    <td>Buy</td>
-                    <td>$196</td>
-                </tr>
-                <tr>
-                    <td>2024-07-23</td>
-                    <td>BMO Capital</td>
-                    <td>Brian Pitz</td>
-                    <td>GCP 성장 및 AI 혁신으로 2025년 EPS 전망 긍정적.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$205</td>
-                </tr>
-                <tr>
-                    <td>2024-07-15</td>
-                    <td>RBC Capital</td>
-                    <td>Brad Erickson</td>
-                    <td>검색 광고 및 클라우드 매출 성장, 독점 소송 영향 제한적.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$200</td>
-                </tr>
-                <tr>
-                    <td>2024-07-10</td>
-                    <td>Wedbush</td>
-                    <td>Scott Devitt</td>
-                    <td>AI 및 클라우드 중심 성장 전략, 유튜브 광고 수익 증가.</td>
-                    <td>Outperform (매수)</td>
-                    <td>$210</td>
-                </tr>
-            </table>
+            
             <h3>분석</h3>
             <p>월가 분석가들은 규제 리스크가 주가에 상당히 반영되었다고 평가하며, AI 및 클라우드 성장으로 과도한 저평가 가능성을 제기합니다. 20개 리포트 중 18개가 매수 등급, 평균 목표가 $204.88(현재 $168.47 대비 +21.6%)으로 낙관적 전망이 우세합니다. 단, UBS는 디지털 광고 성장 둔화 우려로 중립적 견해를 제시했습니다.</p>
+            
             <p><strong>출처</strong>: 
                 <a href="https://finance.yahoo.com">Yahoo Finance</a>, 
                 <a href="https://www.marketbeat.com">MarketBeat</a>, 
@@ -755,39 +181,106 @@
             </p>
         </section>
     </div>
+    
     <footer>
         <p>© 2025 구글 독점 소송 분석 웹사이트</p>
     </footer>
+    
     <script>
         // 전역 변수
         let revenueChartInstance, netIncomeChartInstance, scenarioPeChartInstance, pegChartInstance, customPePegChartInstance;
         let showRevenueLoss = true, showNetIncomeLoss = true;
-
+        
         // 원본 데이터
         const baseRevenueData = [494, 104.7, 79.5, 116.3, 119.6, 4];
         const revenueLossData = [74.1, 15.7, 11.9, 5.8, 0, 0];
         const baseNetIncomeData = [172.9, 26.2, 15.9, 17.4, 16.6, -11.7];
         const netIncomeLossData = [14.8, 2.3, 1.4, 0.3, 0, 0];
-
+        
         // 시나리오별 P/E 데이터
         const scenarioPeData = {
             1: [24.1, 20.8, 19.9, 21.8, 20.4, 19.4, 34, 39, 47, 28], // 2025년
             2: [25.4, 18.9, 17.3, 20.8, 18.3, 16.4, 34, 39, 47, 28], // 2026년
             3: [26.7, 17.2, 15.1, 19.8, 16.3, 13.9, 34, 39, 47, 28]  // 2027년
         };
-
+        
+        // 모바일 여부 체크
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+        
+        // 차트 기본 옵션
+        function getChartOptions(title, yAxisLabel) {
+            return {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { 
+                            display: true, 
+                            text: yAxisLabel,
+                            font: { size: isMobile() ? 10 : 12 }
+                        },
+                        ticks: {
+                            font: { size: isMobile() ? 9 : 11 }
+                        }
+                    },
+                    x: {
+                        title: { 
+                            display: true, 
+                            text: '사업 부문',
+                            font: { size: isMobile() ? 10 : 12 }
+                        },
+                        ticks: {
+                            font: { size: isMobile() ? 8 : 11 },
+                            maxRotation: isMobile() ? 45 : 0,
+                            autoSkip: false
+                        }
+                    }
+                },
+                plugins: {
+                    title: { 
+                        display: true, 
+                        text: title,
+                        font: { size: isMobile() ? 12 : 16 }
+                    },
+                    legend: { 
+                        position: 'top',
+                        labels: {
+                            font: { size: isMobile() ? 9 : 11 },
+                            boxWidth: isMobile() ? 12 : 40,
+                            padding: isMobile() ? 10 : 15
+                        }
+                    },
+                    tooltip: {
+                        titleFont: { size: isMobile() ? 10 : 12 },
+                        bodyFont: { size: isMobile() ? 9 : 11 },
+                        padding: isMobile() ? 8 : 12
+                    }
+                }
+            };
+        }
+        
         // 매출 그래프 렌더링
         function renderRevenueChart() {
             const revenueCanvas = document.getElementById('revenueChart');
-            if (!revenueCanvas) {
-                console.warn('Revenue chart canvas not found');
-                return;
-            }
+            if (!revenueCanvas) return;
+            
             const revenueCtx = revenueCanvas.getContext('2d');
+            
+            if (revenueChartInstance) {
+                revenueChartInstance.destroy();
+            }
+            
+            const labels = isMobile() ? 
+                ['검색', '유튜브', '네트워크', '구독/플랫폼', '클라우드', '기타'] :
+                ['Google Search & Other', 'YouTube Ads', 'Google Network', 'Subscriptions', 'Google Cloud', 'Other Bets'];
+            
             revenueChartInstance = new Chart(revenueCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Google Search & Other', 'YouTube Ads', 'Google Network', 'Subscriptions', 'Google Cloud', 'Other Bets'],
+                    labels: labels,
                     datasets: [
                         {
                             label: '매출 (억 달러)',
@@ -798,7 +291,7 @@
                             stack: 'Stack 0'
                         },
                         {
-                            label: '규제 리스크로 인한 예상 매출 감소 (억 달러)',
+                            label: '규제 리스크 감소',
                             data: showRevenueLoss ? revenueLossData : [0, 0, 0, 0, 0, 0],
                             backgroundColor: 'rgba(255, 99, 132, 0.5)',
                             borderColor: 'rgba(255, 99, 132, 1)',
@@ -807,36 +300,29 @@
                         }
                     ]
                 },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: '매출 (억 달러)' }
-                        },
-                        x: {
-                            title: { display: true, text: '사업 부문' }
-                        }
-                    },
-                    plugins: {
-                        title: { display: true, text: '2024년 4분기 구글 사업 부문별 매출 및 규제 리스크 영향' },
-                        legend: { position: 'top' }
-                    }
-                }
+                options: getChartOptions('2024년 4분기 구글 사업 부문별 매출', '매출 (억 달러)')
             });
         }
-
+        
         // 순이익 그래프 렌더링
         function renderNetIncomeChart() {
             const netIncomeCanvas = document.getElementById('netIncomeChart');
-            if (!netIncomeCanvas) {
-                console.warn('Net income chart canvas not found');
-                return;
-            }
+            if (!netIncomeCanvas) return;
+            
             const netIncomeCtx = netIncomeCanvas.getContext('2d');
+            
+            if (netIncomeChartInstance) {
+                netIncomeChartInstance.destroy();
+            }
+            
+            const labels = isMobile() ? 
+                ['검색', '유튜브', '네트워크', '구독/플랫폼', '클라우드', '기타'] :
+                ['Google Search & Other', 'YouTube Ads', 'Google Network', 'Subscriptions', 'Google Cloud', 'Other Bets'];
+            
             netIncomeChartInstance = new Chart(netIncomeCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Google Search & Other', 'YouTube Ads', 'Google Network', 'Subscriptions', 'Google Cloud', 'Other Bets'],
+                    labels: labels,
                     datasets: [
                         {
                             label: '순이익 (억 달러)',
@@ -847,7 +333,7 @@
                             stack: 'Stack 0'
                         },
                         {
-                            label: '규제 리스크로 인한 예상 순이익 감소 (억 달러)',
+                            label: '규제 리스크 감소',
                             data: showNetIncomeLoss ? netIncomeLossData : [0, 0, 0, 0, 0, 0],
                             backgroundColor: 'rgba(255, 99, 132, 0.5)',
                             borderColor: 'rgba(255, 99, 132, 1)',
@@ -856,68 +342,20 @@
                         }
                     ]
                 },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: '순이익 (억 달러)' }
-                        },
-                        x: {
-                            title: { display: true, text: '사업 부문' }
-                        }
-                    },
-                    plugins: {
-                        title: { display: true, text: '2024년 4분기 구글 사업 부문별 순이익 및 규제 리스크 영향' },
-                        legend: { position: 'top' }
-                    }
-                }
+                options: getChartOptions('2024년 4분기 구글 사업 부문별 순이익', '순이익 (억 달러)')
             });
         }
-
-        // 매출 감소폭 토글
-        function toggleRevenueLoss() {
-            const button = document.getElementById('toggle-revenue-loss');
-            if (!button) {
-                console.warn('Revenue toggle button not found');
-                return;
-            }
-            showRevenueLoss = !showRevenueLoss;
-            button.textContent = showRevenueLoss ? '규제 리스크 감소폭 숨기기' : '규제 리스크 감소폭 보이기';
-            if (revenueChartInstance) {
-                revenueChartInstance.data.datasets[0].data = showRevenueLoss ? baseRevenueData : baseRevenueData.map((val, i) => val + revenueLossData[i]);
-                revenueChartInstance.data.datasets[1].data = showRevenueLoss ? revenueLossData : [0, 0, 0, 0, 0, 0];
-                revenueChartInstance.update();
-            }
-        }
-
-        // 순이익 감소폭 토글
-        function toggleNetIncomeLoss() {
-            const button = document.getElementById('toggle-net-income-loss');
-            if (!button) {
-                console.warn('Net income toggle button not found');
-                return;
-            }
-            showNetIncomeLoss = !showNetIncomeLoss;
-            button.textContent = showNetIncomeLoss ? '규제 리스크 감소폭 숨기기' : '규제 리스크 감소폭 보이기';
-            if (netIncomeChartInstance) {
-                netIncomeChartInstance.data.datasets[0].data = showNetIncomeLoss ? baseNetIncomeData : baseNetIncomeData.map((val, i) => val + netIncomeLossData[i]);
-                netIncomeChartInstance.data.datasets[1].data = showNetIncomeLoss ? netIncomeLossData : [0, 0, 0, 0, 0, 0];
-                netIncomeChartInstance.update();
-            }
-        }
-
+        
         // P/E 비율 비교 그래프
         function renderPeRatioChart() {
             const peRatioCanvas = document.getElementById('peRatioChart');
-            if (!peRatioCanvas) {
-                console.warn('P/E ratio chart canvas not found');
-                return;
-            }
+            if (!peRatioCanvas) return;
+            
             const peRatioCtx = peRatioCanvas.getContext('2d');
             new Chart(peRatioCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Google (GOOGL)', 'Microsoft (MSFT)', 'Apple (AAPL)', 'Amazon (AMZN)', 'Meta (META)'],
+                    labels: ['Google', 'Microsoft', 'Apple', 'Amazon', 'Meta'],
                     datasets: [
                         {
                             label: 'P/E 비율',
@@ -941,46 +379,36 @@
                     ]
                 },
                 options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'P/E 비율' }
-                        },
-                        x: {
-                            title: { display: true, text: '기업' }
-                        }
-                    },
+                    ...getChartOptions('2025년 6월 기준 빅테크 P/E 비율', 'P/E 비율'),
                     plugins: {
-                        title: { display: true, text: '2025년 6월 기준 빅테크 기업 P/E 비율 비교' },
+                        ...getChartOptions('2025년 6월 기준 빅테크 P/E 비율', 'P/E 비율').plugins,
                         legend: { display: false }
                     }
                 }
             });
         }
-
+        
         // 시나리오별 P/E 비교 그래프
         function renderScenarioPeChart() {
             const scenarioPeCanvas = document.getElementById('scenarioPeChart');
-            if (!scenarioPeCanvas) {
-                console.warn('Scenario P/E chart canvas not found');
-                return;
-            }
+            if (!scenarioPeCanvas) return;
+            
             const scenarioPeCtx = scenarioPeCanvas.getContext('2d');
             const year = parseInt(document.getElementById('peYear').value);
             const yearText = {1: '2025', 2: '2026', 3: '2027'}[year];
-
+            
             if (scenarioPeChartInstance) {
                 scenarioPeChartInstance.destroy();
             }
-
+            
+            const labels = isMobile() ? 
+                ['TAC중단+AI부진', '기본', 'AI성장+TAC유지', 'AI성장+TAC중단', '벌금+AI성장', 'TAC유지+클라우드', 'MS', 'AAPL', 'AMZN', 'META'] :
+                ['TAC 중단 + AI 부진', '기본', 'AI 성장 + TAC 유지', 'AI 성장 + TAC 중단', '벌금 + AI 성장', 'TAC 유지 + 클라우드 가속', 'Microsoft', 'Apple', 'Amazon', 'Meta'];
+            
             scenarioPeChartInstance = new Chart(scenarioPeCtx, {
                 type: 'bar',
                 data: {
-                    labels: [
-                        'TAC 중단 + AI 부진', '기본', 'AI 성장 + TAC 유지',
-                        'AI 성장 + TAC 중단', '벌금 + AI 성장', 'TAC 유지 + 클라우드 가속',
-                        'Microsoft', 'Apple', 'Amazon', 'Meta'
-                    ],
+                    labels: labels,
                     datasets: [
                         {
                             label: `P/E 비율 (${yearText}년)`,
@@ -1002,41 +430,40 @@
                     ]
                 },
                 options: {
+                    ...getChartOptions(`${yearText}년 시나리오별 P/E 비율`, 'P/E 비율'),
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'P/E 비율' }
-                        },
+                        ...getChartOptions(`${yearText}년 시나리오별 P/E 비율`, 'P/E 비율').scales,
                         x: {
-                            title: { display: true, text: '기업/시나리오' }
+                            ...getChartOptions(`${yearText}년 시나리오별 P/E 비율`, 'P/E 비율').scales.x,
+                            title: { display: true, text: '시나리오', font: { size: isMobile() ? 10 : 12 } }
                         }
                     },
                     plugins: {
-                        title: { display: true, text: `${yearText}년 시나리오별 구글 P/E 비율 및 타 기업 비교` },
+                        ...getChartOptions(`${yearText}년 시나리오별 P/E 비율`, 'P/E 비율').plugins,
                         legend: { display: false }
                     }
                 }
             });
         }
-
-        // 시나리오별 PEG 비교 그래프
+        
+        // PEG 비교 그래프
         function renderPegChart() {
             const pegCanvas = document.getElementById('pegChart');
-            if (!pegCanvas) {
-                console.warn('PEG chart canvas not found');
-                return;
-            }
+            if (!pegCanvas) return;
+            
             const pegCtx = pegCanvas.getContext('2d');
             if (pegChartInstance) {
                 pegChartInstance.destroy();
             }
+            
+            const labels = isMobile() ? 
+                ['기본', 'AI+TAC유지', 'AI+TAC중단', '벌금+AI', 'TAC+클라우드', 'MS', 'AAPL', 'AMZN', 'META'] :
+                ['기본', 'AI 성장 + TAC 유지', 'AI 성장 + TAC 중단', '벌금 + AI 성장', 'TAC 유지 + 클라우드 가속', 'Microsoft', 'Apple', 'Amazon', 'Meta'];
+            
             pegChartInstance = new Chart(pegCtx, {
                 type: 'bar',
                 data: {
-                    labels: [
-                        '기본', 'AI 성장 + TAC 유지', 'AI 성장 + TAC 중단', '벌금 + AI 성장',
-                        'TAC 유지 + 클라우드 가속', 'Microsoft', 'Apple', 'Amazon', 'Meta'
-                    ],
+                    labels: labels,
                     datasets: [
                         {
                             label: 'PEG 비율',
@@ -1056,17 +483,9 @@
                     ]
                 },
                 options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'PEG 비율' }
-                        },
-                        x: {
-                            title: { display: true, text: '기업/시나리오' }
-                        }
-                    },
+                    ...getChartOptions('시나리오별 PEG 비율 비교', 'PEG 비율'),
                     plugins: {
-                        title: { display: true, text: '시나리오별 구글 PEG 비율 및 타 기업 비교' },
+                        ...getChartOptions('시나리오별 PEG 비율 비교', 'PEG 비율').plugins,
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
@@ -1074,7 +493,7 @@
                                     let label = context.dataset.label || '';
                                     let value = context.raw;
                                     if (value === Infinity || value === -Infinity) {
-                                        return `${label}: ∞ (성장률 0% 또는 음수)`;
+                                        return `${label}: ∞`;
                                     }
                                     return `${label}: ${value.toFixed(2)}`;
                                 }
@@ -1084,48 +503,46 @@
                 }
             });
         }
-
+        
         // 커스텀 시나리오 P/E 또는 PEG 그래프
         function renderCustomPePegChart() {
             const customCanvas = document.getElementById('customPePegChart');
-            if (!customCanvas) {
-                console.warn('Custom P/E or PEG chart canvas not found');
-                return;
-            }
+            if (!customCanvas) return;
+            
             const customCtx = customCanvas.getContext('2d');
             
             const mode = document.getElementById('pePegMode').value;
             const years = parseInt(document.getElementById('fwdYear').value);
             const aiGrowthRate = parseFloat(document.getElementById('aiGrowthRate').value);
             const regulatoryLossRate = parseFloat(document.getElementById('regulatoryLossRate').value);
-
+            
             // EPS 성장률 계산
             const aiContribution = aiGrowthRate * 0.5; // AI 매출 1% → EPS 0.5%
             const regulatoryImpact = (regulatoryLossRate / 100) * 678.2 * 0.35 / 120; // 광고 매출 678.2억, 이익률 35%, 주식 120억
             const epsGrowthRate = aiContribution - regulatoryImpact * 100;
-
+            
             // EPS 예측
             let eps = 7.6; // 2024년 EPS
             for (let i = 0; i < years; i++) {
                 eps *= (1 + epsGrowthRate / 100);
             }
             eps = Math.max(eps, 0.01); // EPS 음수 방지
-
+            
             // P/E 및 PEG 계산
             const pe = 174 / eps;
             const peg = epsGrowthRate !== 0 ? pe / epsGrowthRate : Infinity;
-
+            
             // 그래프 데이터
-            const labels = ['커스텀 시나리오', 'Microsoft', 'Apple', 'Amazon', 'Meta'];
+            const labels = ['Google', 'Microsoft', 'Apple', 'Amazon', 'Meta'];
             const data = mode === 'pe' ? [pe, 34, 39, 47, 28] : [peg, 3.1, 2.9, 2.5, 1.22];
-            const title = mode === 'pe' ? `커스텀 시나리오 P/E 비율 비교 (${2024 + years}년)` : `커스텀 시나리오 PEG 비율 비교 (${2024 + years}년)`;
+            const title = mode === 'pe' ? `커스텀 P/E 비율 (${2024 + years}년)` : `커스텀 PEG 비율 (${2024 + years}년)`;
             const yAxisLabel = mode === 'pe' ? 'P/E 비율' : 'PEG 비율';
-
+            
             // 기존 차트 파괴
             if (customPePegChartInstance) {
                 customPePegChartInstance.destroy();
             }
-
+            
             customPePegChartInstance = new Chart(customCtx, {
                 type: 'bar',
                 data: {
@@ -1153,18 +570,10 @@
                     ]
                 },
                 options: {
-                    animation: { duration: 0 }, // 애니메이션 비활성화
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: yAxisLabel }
-                        },
-                        x: {
-                            title: { display: true, text: '기업/시나리오' }
-                        }
-                    },
+                    ...getChartOptions(title, yAxisLabel),
+                    animation: { duration: 0 },
                     plugins: {
-                        title: { display: true, text: title },
+                        ...getChartOptions(title, yAxisLabel).plugins,
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
@@ -1172,7 +581,7 @@
                                     let label = context.dataset.label || '';
                                     let value = context.raw;
                                     if (value === Infinity || value === -Infinity) {
-                                        return `${label}: N/A (성장률 0% 또는 음수)`;
+                                        return `${label}: N/A`;
                                     }
                                     return `${label}: ${value.toFixed(2)}`;
                                 }
@@ -1182,7 +591,27 @@
                 }
             });
         }
-
+        
+        // 매출 감소폭 토글
+        function toggleRevenueLoss() {
+            const button = document.getElementById('toggle-revenue-loss');
+            if (!button) return;
+            
+            showRevenueLoss = !showRevenueLoss;
+            button.textContent = showRevenueLoss ? '규제 리스크 감소폭 숨기기' : '규제 리스크 감소폭 보이기';
+            renderRevenueChart();
+        }
+        
+        // 순이익 감소폭 토글
+        function toggleNetIncomeLoss() {
+            const button = document.getElementById('toggle-net-income-loss');
+            if (!button) return;
+            
+            showNetIncomeLoss = !showNetIncomeLoss;
+            button.textContent = showNetIncomeLoss ? '규제 리스크 감소폭 숨기기' : '규제 리스크 감소폭 보이기';
+            renderNetIncomeChart();
+        }
+        
         // 슬라이더 값 및 금액 표시 업데이트
         function updateSliderValues() {
             const aiGrowthValue = document.getElementById('aiGrowthValue');
@@ -1190,14 +619,14 @@
             const aiGrowthRate = document.getElementById('aiGrowthRate');
             const regulatoryLossRate = document.getElementById('regulatoryLossRate');
             const sliderValues = document.getElementById('sliderValues');
-
+            
             if (aiGrowthValue && aiGrowthRate) {
                 aiGrowthValue.textContent = aiGrowthRate.value;
             }
             if (regulatoryLossRateValue && regulatoryLossRate) {
                 regulatoryLossRateValue.textContent = regulatoryLossRate.value;
             }
-
+            
             if (sliderValues && aiGrowthRate && regulatoryLossRate) {
                 const aiProfit = (parseFloat(aiGrowthRate.value) / 100) * 226 * 0.35; // AI 매출 226억, 이익률 35%
                 const regulatoryLoss = -(parseFloat(regulatoryLossRate.value) / 100) * 678.2 * 0.35; // 광고 매출 678.2억
@@ -1207,42 +636,113 @@
                 `;
             }
         }
-
-        // 페이지 로드 시 그래프 및 컨트롤 초기화
-        window.onload = function() {
+        
+        // 테이블 스크롤 감지
+        function checkTableScroll() {
+            const tableWrappers = document.querySelectorAll('.table-wrapper');
+            tableWrappers.forEach(wrapper => {
+                const table = wrapper.querySelector('table');
+                if (table && table.scrollWidth > wrapper.clientWidth) {
+                    wrapper.classList.add('scrollable');
+                    
+                    wrapper.addEventListener('scroll', function() {
+                        if (this.scrollLeft > 0) {
+                            this.classList.remove('scrollable');
+                        }
+                    });
+                } else {
+                    wrapper.classList.remove('scrollable');
+                }
+            });
+        }
+        
+        // 리사이즈 시 차트 다시 그리기
+        let resizeTimer;
+        function handleResize() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                renderRevenueChart();
+                renderNetIncomeChart();
+                renderPeRatioChart();
+                renderScenarioPeChart();
+                renderPegChart();
+                renderCustomPePegChart();
+                checkTableScroll();
+            }, 250);
+        }
+        
+        // 페이지 로드 시 초기화
+        function initializeCharts() {
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js is not loaded');
+                return;
+            }
+            
+            // 차트 렌더링
             renderRevenueChart();
             renderNetIncomeChart();
             renderPeRatioChart();
             renderScenarioPeChart();
             renderPegChart();
             renderCustomPePegChart();
-
+            
+            // 테이블 스크롤 체크
+            checkTableScroll();
+            
+            // 초기 슬라이더 값 표시
+            updateSliderValues();
+            
+            // 모바일 뷰포트 높이 수정 (주소바 고려)
+            function setViewportHeight() {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
+            setViewportHeight();
+            window.addEventListener('resize', setViewportHeight);
+        }
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            // Chart.js 로드 체크
+            if (typeof Chart !== 'undefined') {
+                initializeCharts();
+            } else {
+                // Chart.js가 아직 로드되지 않았다면 대기
+                let checkCount = 0;
+                const checkInterval = setInterval(function() {
+                    checkCount++;
+                    if (typeof Chart !== 'undefined') {
+                        clearInterval(checkInterval);
+                        initializeCharts();
+                    } else if (checkCount > 20) {
+                        clearInterval(checkInterval);
+                        console.error('Chart.js 로드 실패');
+                        document.body.innerHTML = '<div style="text-align:center; padding:50px;"><h2>차트 라이브러리 로드 실패</h2><p>인터넷 연결을 확인하고 페이지를 새로고침해주세요.</p><button onclick="location.reload()" style="padding:10px 20px; font-size:16px;">새로고침</button></div>';
+                    }
+                }, 250);
+            }
+            
             // 버튼 이벤트 리스너
             const revenueToggleButton = document.getElementById('toggle-revenue-loss');
             const netIncomeToggleButton = document.getElementById('toggle-net-income-loss');
             if (revenueToggleButton) {
                 revenueToggleButton.addEventListener('click', toggleRevenueLoss);
-            } else {
-                console.warn('Revenue toggle button not found');
             }
             if (netIncomeToggleButton) {
                 netIncomeToggleButton.addEventListener('click', toggleNetIncomeLoss);
-            } else {
-                console.warn('Net income toggle button not found');
             }
-
+            
             // 시나리오 P/E 연도 선택 이벤트
             const peYear = document.getElementById('peYear');
             if (peYear) {
                 peYear.addEventListener('change', renderScenarioPeChart);
             }
-
+            
             // 커스텀 그래프 컨트롤 이벤트 리스너
             const pePegMode = document.getElementById('pePegMode');
             const fwdYear = document.getElementById('fwdYear');
             const aiGrowthRate = document.getElementById('aiGrowthRate');
             const regulatoryLossRate = document.getElementById('regulatoryLossRate');
-
+            
             if (pePegMode) {
                 pePegMode.addEventListener('change', renderCustomPePegChart);
             }
@@ -1261,10 +761,798 @@
                     renderCustomPePegChart();
                 });
             }
-
-            // 초기 슬라이더 값 표시
-            updateSliderValues();
-        };
+            
+            // 리사이즈 이벤트
+            window.addEventListener('resize', handleResize);
+        });
     </script>
 </body>
-</html>
+</html><!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>구글 독점 규제와 밸류에이션 분석</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Chart.js 로드 확인
+        window.addEventListener('load', function() {
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js가 로드되지 않았습니다. 인터넷 연결을 확인해주세요.');
+                // 대체 CDN 시도
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js';
+                script.onload = function() {
+                    console.log('대체 CDN에서 Chart.js 로드 성공');
+                    initializeCharts();
+                };
+                script.onerror = function() {
+                    alert('차트 라이브러리를 로드할 수 없습니다. 페이지를 새로고침해주세요.');
+                };
+                document.head.appendChild(script);
+            }
+        });
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        header {
+            background: #333;
+            color: #fff;
+            padding: 15px 10px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav {
+            background: #444;
+            padding: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+            position: sticky;
+            top: 60px;
+            z-index: 99;
+        }
+        
+        nav a {
+            color: #fff;
+            display: inline-block;
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        nav a:hover, nav a:active {
+            background: #555;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        section {
+            margin-bottom: 40px;
+            scroll-margin-top: 140px;
+        }
+        
+        h2 {
+            color: #333;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            margin-top: 0;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #333;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            margin-top: 20px;
+        }
+        
+        p, li {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            line-height: 1.8;
+        }
+        
+        /* 테이블 스타일 개선 */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 20px -15px;
+            padding: 0 15px;
+        }
+        
+        table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 12px 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f4f4f4;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            font-size: 0.85rem;
+        }
+        
+        /* 모바일 테이블 스크롤 인디케이터 */
+        .table-wrapper::after {
+            content: '→ 스크롤하여 더 보기';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(68, 68, 68, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .table-wrapper.scrollable::after {
+            opacity: 1;
+        }
+        
+        /* 차트 컨테이너 */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 250px;
+            }
+        }
+        
+        canvas {
+            max-width: 100%;
+            height: 100% !important;
+        }
+        
+        /* 버튼 스타일 개선 */
+        .toggle-button {
+            padding: 12px 24px;
+            margin: 10px 0;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            -webkit-appearance: none;
+            touch-action: manipulation;
+        }
+        
+        .toggle-button:hover, .toggle-button:active {
+            background-color: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* 컨트롤 그룹 개선 */
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .control-group label {
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .control-group select,
+        .control-group input[type="range"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            -webkit-appearance: none;
+        }
+        
+        /* 슬라이더 스타일 개선 */
+        input[type="range"] {
+            width: 100%;
+            height: 40px;
+            background: transparent;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-track {
+            width: 100%;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #444;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-top: -9px;
+        }
+        
+        input[type="range"]::-moz-range-track {
+            width: 100%;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #444;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        #sliderValues {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        
+        .positive {
+            color: #27ae60;
+            font-weight: 500;
+        }
+        
+        .negative {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+        
+        /* 링크 스타일 개선 */
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+        
+        a:hover, a:active {
+            background: rgba(41, 128, 185, 0.1);
+            text-decoration: underline;
+        }
+        
+        /* Footer 개선 */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 10px;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+        
+        /* 모바일 최적화 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 10px;
+            }
+            
+            nav {
+                top: 50px;
+            }
+            
+            section {
+                scroll-margin-top: 120px;
+            }
+            
+            .table-wrapper {
+                margin: 15px -10px;
+                padding: 0 10px;
+            }
+            
+            th, td {
+                padding: 8px 6px;
+                font-size: 0.8rem;
+            }
+            
+            .controls {
+                gap: 10px;
+            }
+            
+            .control-group {
+                min-width: 100%;
+            }
+        }
+        
+        /* 다크모드 지원 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #e0e0e0;
+            }
+            
+            .container {
+                background: #2a2a2a;
+                box-shadow: 0 0 10px rgba(255,255,255,0.1);
+            }
+            
+            h2, h3 {
+                color: #e0e0e0;
+                border-bottom-color: #e0e0e0;
+            }
+            
+            table, th, td {
+                border-color: #444;
+            }
+            
+            th {
+                background: #333;
+            }
+            
+            .control-group select,
+            input[type="range"]::-webkit-slider-track,
+            input[type="range"]::-moz-range-track {
+                background: #444;
+                border-color: #555;
+                color: #e0e0e0;
+            }
+            
+            #sliderValues {
+                background: #333;
+            }
+            
+            a {
+                color: #5dade2;
+            }
+        }
+        
+        /* 로딩 인디케이터 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #333;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>구글 독점 규제와 밸류에이션 분석</h1>
+    </header>
+    <nav>
+        <a href="#regulation">규제 히스토리</a>
+        <a href="#financial">재무 분석</a>
+        <a href="#valuation">밸류에이션</a>
+        <a href="#wallstreet">월가 리포트</a>
+    </nav>
+    <div class="container">
+        <section id="regulation">
+            <h2>규제 히스토리 및 전망</h2>
+            <p>구글(알파벳)은 검색 및 광고 시장에서의 독점적 지위로 인해 미국과 유럽연합에서 다수의 소송을 직면하고 있습니다. 아래는 주요 사건과 현재 진행 상황, 향후 일정을 상세히 정리한 내용입니다.</p>
+            
+            <h3>주요 독점 사건</h3>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>사건</th>
+                        <th>시작 날짜</th>
+                        <th>결정 날짜</th>
+                        <th>결과</th>
+                        <th>주요 쟁점</th>
+                        <th>현재 진행 상황</th>
+                    </tr>
+                    <tr>
+                        <td>미국 v. 구글 (검색)</td>
+                        <td>2020-10-20</td>
+                        <td>2024-08-05</td>
+                        <td>구글의 검색 시장 독점 인정, 항소 중</td>
+                        <td>기본 검색 엔진 계약(예: 애플과의 200억 달러 계약)을 통한 독점 유지</td>
+                        <td>2025년 5월 30일 구제 방안 재판 마지막 변론, 2025년 8월 판결 예상</td>
+                    </tr>
+                    <tr>
+                        <td>미국 v. 구글 (광고 기술)</td>
+                        <td>2023-01-24</td>
+                        <td>2025-04-17</td>
+                        <td>구글의 광고 기술 시장 독점 인정</td>
+                        <td>광고 기술 스택(예: Google Ad Manager) 독점</td>
+                        <td>2025년 9월 구제 방안 재판 예정</td>
+                    </tr>
+                    <tr>
+                        <td>구글 쇼핑 (EU)</td>
+                        <td>2010</td>
+                        <td>2017-06-27</td>
+                        <td>벌금 €24억, 구글 쇼핑 분리</td>
+                        <td>자사 쇼핑 서비스 우선 제공</td>
+                        <td>항소 기각, 규제 준수 완료</td>
+                    </tr>
+                    <tr>
+                        <td>안드로이드 (EU)</td>
+                        <td>2013</td>
+                        <td>2018-07-19</td>
+                        <td>벌금 €43억, 규제 준수</td>
+                        <td>앱 사전 설치 강제 및 경쟁 안드로이드 억제</td>
+                        <td>항소 중, 일부 준수 조치 시행</td>
+                    </tr>
+                    <tr>
+                        <td>애드센스 (EU)</td>
+                        <td>2010</td>
+                        <td>2019-03-20</td>
+                        <td>벌금 €14.9억, 규제 준수 완료</td>
+                        <td>경쟁 광고 제한</td>
+                        <td>규제 준수 완료</td>
+                    </tr>
+                    <tr>
+                        <td>핏빗 인수 (EU)</td>
+                        <td>2020</td>
+                        <td>2020-12-17</td>
+                        <td>조건부 승인</td>
+                        <td>데이터 사용 및 API 접근 우려</td>
+                        <td>규제 준수 중</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>향후 일정</h3>
+            <ul>
+                <li><strong>2025년 8월</strong>: 검색 시장 독점 구제 방안 판결 예상.</li>
+                <li><strong>2025년 9월</strong>: 광고 기술 시장 구제 방안 재판.</li>
+                <li><strong>진행 중</strong>: 검색 독점 항소 및 광고 기술 항소.</li>
+            </ul>
+            
+            <h3>분석</h3>
+            <p>구글의 독점 소송은 검색 및 광고 시장에 직접적인 영향을 미치며, 특히 기본 검색 계약(예: 애플과의 200억 달러 계약) 종료나 Google Ad Manager 분할과 같은 구조적 변화가 주요 리스크입니다. DOJ는 Chrome 브라우저 분리와 검색 데이터 공유를 제안하였으나, 판사는 신중한 입장을 보였습니다. 항소 과정은 최대 5년까지 걸릴 수 있어 단기적 영향은 제한적이나, 장기적으로 매출 구조 변화가 예상됩니다.</p>
+            
+            <p><strong>출처</strong>: 
+                <a href="https://www.npr.org/2024/08/05/nx-s1-5064624/google-justice-department-antitrust-search">NPR</a>, 
+                <a href="https://www.justice.gov/opa/pr/department-justice-prevails-landmark-antitrust-case-against-google">DOJ</a>, 
+                <a href="https://ec.europa.eu/commission/presscorner/detail/en/IP_17_1784">EC Google Shopping</a>, 
+                <a href="https://www.reuters.com/article/us-eu-alphabet-inc-antitrust-idUSKCN1MJ2CA">Reuters Android</a>, 
+                <a href="http://europa.eu/rapid/press-release_IP-19-1770_en.htm">EC AdSense</a>, 
+                <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_20_2484">EC Fitbit</a>
+            </p>
+        </section>
+        
+        <section id="financial">
+            <h2>재무 구조 분석</h2>
+            <p>2024년 4분기 구글의 재무 보고서를 기반으로 사업 부문별 매출과 순이익을 분석하였습니다. 규제 리스크로 인한 감소폭은 기존 막대와 겹쳐 표시되며, 숨기기 버튼으로 토글 가능합니다.</p>
+            
+            <h3>사업 부문별 매출</h3>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>부문</th>
+                        <th>매출 (억 달러)</th>
+                        <th>YoY 성장률</th>
+                        <th>규제 리스크</th>
+                    </tr>
+                    <tr>
+                        <td>Google Search & Other</td>
+                        <td>494</td>
+                        <td>+12.3%</td>
+                        <td>높음 (TAC 계약 종료 가능성)</td>
+                    </tr>
+                    <tr>
+                        <td>YouTube Ads</td>
+                        <td>104.7</td>
+                        <td>+13.8%</td>
+                        <td>중간 (광고 규제 가능성)</td>
+                    </tr>
+                    <tr>
+                        <td>Google Network</td>
+                        <td>79.5</td>
+                        <td>-4%</td>
+                        <td>높음 (광고 기술 분할 가능성)</td>
+                    </tr>
+                    <tr>
+                        <td>Subscriptions, Platforms, Devices</td>
+                        <td>116.3</td>
+                        <td>+8%</td>
+                        <td>낮음 (앱 마켓 규제 가능성)</td>
+                    </tr>
+                    <tr>
+                        <td>Google Cloud</td>
+                        <td>119.6</td>
+                        <td>+30%</td>
+                        <td>낮음</td>
+                    </tr>
+                    <tr>
+                        <td>Other Bets</td>
+                        <td>4</td>
+                        <td>-39%</td>
+                        <td>낮음</td>
+                    </tr>
+                    <tr>
+                        <th>총 매출</th>
+                        <td>964.7</td>
+                        <td>+12%</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>매출 그래프</h3>
+            <button id="toggle-revenue-loss" class="toggle-button">규제 리스크 감소폭 숨기기</button>
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+            <p><strong>설명</strong>: 파란색 막대는 실제 매출(감소폭 숨김 시 감소폭 포함), 빨간색 반투명 막대는 규제 리스크로 인한 예상 매출 감소(광고 15%, Subscriptions 5%)를 겹쳐 표현합니다.</p>
+            
+            <h3>사업 부문별 순이익</h3>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>부문</th>
+                        <th>순이익 (억 달러)</th>
+                        <th>규제 리스크 감소폭 (억 달러)</th>
+                    </tr>
+                    <tr>
+                        <td>Google Search & Other</td>
+                        <td>172.9</td>
+                        <td>14.8</td>
+                    </tr>
+                    <tr>
+                        <td>YouTube Ads</td>
+                        <td>26.2</td>
+                        <td>2.3</td>
+                    </tr>
+                    <tr>
+                        <td>Google Network</td>
+                        <td>15.9</td>
+                        <td>1.4</td>
+                    </tr>
+                    <tr>
+                        <td>Subscriptions, Platforms, Devices</td>
+                        <td>17.4</td>
+                        <td>0.3</td>
+                    </tr>
+                    <tr>
+                        <td>Google Cloud</td>
+                        <td>16.6</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Other Bets</td>
+                        <td>-11.7</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>총 순이익</th>
+                        <td>265.4</td>
+                        <td>18.9</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>순이익 그래프</h3>
+            <button id="toggle-net-income-loss" class="toggle-button">규제 리스크 감소폭 숨기기</button>
+            <div class="chart-container">
+                <canvas id="netIncomeChart"></canvas>
+            </div>
+            <p><strong>설명</strong>: 파란색 막대는 부문별 순이익(감소폭 숨김 시 감소폭 포함), 빨간색 반투명 막대는 규제 리스크로 인한 예상 순이익 감소(7.1%)를 겹쳐 표현합니다.</p>
+            
+            <h3>분석</h3>
+            <p>검색 및 광고 부문은 매출과 순이익의 주요 원천이나, TAC 지불 소송 패소로 지속적 타격 예상됩니다. 클라우드는 2025년 750억 달러 AI 및 클라우드 투자로 성장 가능성이 큽니다.</p>
+            
+            <p><strong>출처</strong>: 
+                <a href="https://www.cnbc.com/2025/02/04/alphabet-q4-earnings-report-2024.html">CNBC</a>
+            </p>
+        </section>
+        
+        <section id="valuation">
+            <h2>밸류에이션 비교</h2>
+            <p>구글과 주요 빅테크 기업의 P/E 및 PEG 비율을 비교하고, 주가 174달러 고정 시 AI 매출 성장 케이스와 6가지 시나리오별 P/E 및 PEG 변화를 분석했습니다.</p>
+            
+            <h3>AI 매출 성장 케이스</h3>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>부문</th>
+                        <th>2025년 매출 (억 달러)</th>
+                        <th>2027년 매출 (억 달러)</th>
+                        <th>2025년 수익 (억 달러)</th>
+                        <th>2027년 수익 (억 달러)</th>
+                        <th>성장률</th>
+                    </tr>
+                    <tr>
+                        <td>GCP (AI 인프라)</td>
+                        <td>160</td>
+                        <td>300</td>
+                        <td>24</td>
+                        <td>60</td>
+                        <td>28%</td>
+                    </tr>
+                    <tr>
+                        <td>Gemini AI (검색)</td>
+                        <td>60</td>
+                        <td>100</td>
+                        <td>21</td>
+                        <td>35</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>Waymo</td>
+                        <td>6</td>
+                        <td>20</td>
+                        <td>-3</td>
+                        <td>2</td>
+                        <td>50%</td>
+                    </tr>
+                    <tr>
+                        <th>총계</th>
+                        <td>226</td>
+                        <td>420</td>
+                        <td>42</td>
+                        <td>97</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>현재 P/E 비율 비교</h3>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>기업</th>
+                        <th>P/E 비율 (2025년 6월)</th>
+                    </tr>
+                    <tr>
+                        <td>Google (GOOGL)</td>
+                        <td>22.9</td>
+                    </tr>
+                    <tr>
+                        <td>Microsoft (MSFT)</td>
+                        <td>34</td>
+                    </tr>
+                    <tr>
+                        <td>Apple (AAPL)</td>
+                        <td>39</td>
+                    </tr>
+                    <tr>
+                        <td>Amazon (AMZN)</td>
+                        <td>47</td>
+                    </tr>
+                    <tr>
+                        <td>Meta (META)</td>
+                        <td>28</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>P/E 비율 비교 그래프</h3>
+            <div class="chart-container">
+                <canvas id="peRatioChart"></canvas>
+            </div>
+            
+            <h3>시나리오별 P/E 비교 그래프</h3>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="peYear">연도 선택:</label>
+                    <select id="peYear">
+                        <option value="1">1년 후 (2025)</option>
+                        <option value="2">2년 후 (2026)</option>
+                        <option value="3">3년 후 (2027)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="scenarioPeChart"></canvas>
+            </div>
+            
+            <h3>시나리오별 PEG 비교 그래프</h3>
+            <div class="chart-container">
+                <canvas id="pegChart"></canvas>
+            </div>
+            
+            <h3>커스텀 시나리오 P/E 또는 PEG 비교 그래프</h3>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="pePegMode">모드 선택:</label>
+                    <select id="pePegMode">
+                        <option value="pe">P/E</option>
+                        <option value="peg">PEG</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="fwdYear">연도 선택:</label>
+                    <select id="fwdYear">
+                        <option value="1">1년 후 (2025)</option>
+                        <option value="2">2년 후 (2026)</option>
+                        <option value="3">3년 후 (2027)</option>
+                        <option value="4">4년 후 (2028)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="aiGrowthRate">AI 성장률 (%): <span id="aiGrowthValue">0</span></label>
+                    <input type="range" id="aiGrowthRate" min="0" max="200" step="1" value="0">
+                </div>
+                <div class="control-group">
+                    <label for="regulatoryLossRate">규제 피해액률 (%): <span id="regulatoryLossRateValue">0</span></label>
+                    <input type="range" id="regulatoryLossRate" min="0" max="20" step="1" value="0">
+                </div>
+            </div>
+            <div id="sliderValues"></div>
+            <div class="chart-container">
+                <canvas id="customPePegChart"></canvas>
+            </div>
+            
+            <p><strong>출처</strong>: 
+                <a href="https://www.investingyoung.ca/post/comprehensive-financial-analysis-meta-vs-google-vs-apple-vs-amazon">Investing Young</a>, 
+                <a href="https://www.tikr.com">Tikr.com</a>, 
+                <a href="https://stockanalysis.com">Stockanalysis.com</a>, 
+                <a href="https://www.tradingview.com">TradingView</a>, 
+                <a href="https://www.reuters.com">Reuters</a>
+            </p>
+            
